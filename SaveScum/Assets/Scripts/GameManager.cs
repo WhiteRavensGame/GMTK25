@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
 
     [SerializeField]
-    private float maxTimeLeft = 5f;
+    private float maxTimeLeft = 3f;
     private float timeLeft;
 
     private GameState gameState = GameState.Playing;
@@ -41,6 +41,12 @@ public class GameManager : MonoBehaviour
         }
             
     }
+
+    private void RestartLevel()
+    {
+
+    }
+
 }
 
 public enum GameState

@@ -37,7 +37,7 @@ public class BattleSpriteAction : MonoBehaviour
 
     void Start()
     {
-		GameManager gm = GameManager.Instance;
+		GameManager.Instance.OnTimeUp += TimeUp;
     }
 
     void Update ()
@@ -106,9 +106,22 @@ public class BattleSpriteAction : MonoBehaviour
 
 	private void KillPlayer()
 	{
+		if (!isAlive)
+			return;
+
         animator.SetBool(hashIsDead, true);
         isAlive = false;
 		
     }
+
+	private void RevivePlayer()
+	{
+
+	}
+
+	private void TimeUp(object sender, System.EventArgs e)
+	{
+		KillPlayer();
+	}
 
 }
