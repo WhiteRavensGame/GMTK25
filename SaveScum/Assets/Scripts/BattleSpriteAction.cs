@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System;
+using Unity.VisualScripting;
 
 public class BattleSpriteAction : MonoBehaviour
 {
@@ -43,7 +44,6 @@ public class BattleSpriteAction : MonoBehaviour
     void Start()
     {
 		GameManager.Instance.OnTimeUp += TimeUp;
-		
     }
 
     void Update ()

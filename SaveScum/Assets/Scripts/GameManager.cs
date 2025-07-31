@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting;
 using UnityEditor.Toolbars;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -10,14 +11,17 @@ public class GameManager : MonoBehaviour
 
     [Header("Data management")]
     [SerializeField] private SaveData[] saveData;
-    [SerializeField] private int activeSaveData = 0;
+    private SaveData activeSaveData;
+
+    [Header("Characters")]
+    [SerializeField] private GameObject[] characters;
 
     [Header("Game balance")]
     [SerializeField]
     private float maxTimeLeft = 3f;
     private float timeLeft;
     private int currentLevel = 1;
-    private Transform playerCharacter;
+    private GameObject playerCharacter;
 
     private GameState gameState = GameState.Playing;
 
@@ -27,25 +31,49 @@ public class GameManager : MonoBehaviour
     
 
     public event EventHandler OnTimeUp;
+    public event EventHandler<SaveData> OnReloadSaveFile;
+    public event EventHandler OnFullLevelReload;
 
-    
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
-        if (Instance == null) Instance = this;
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(this.gameObject);
+        }
         else Destroy(this.gameObject);
     }
 
     private void Start()
     {
+        Debug.Log("GM START");
         timeLeft = maxTimeLeft;
 
         BattleSpriteAction.OnPlayerDeath += BattleSpriteAction_OnPlayerDeath;
 
-        saveData = new SaveData[3];
+        //There was a save data used to load. Load that save instead. 
+        if (activeSaveData != null)
+        {
+            Debug.Log("respawn via save point");
+            RespawnCharacterWithReload();
+        }
+        else if (playerCharacter == null)
+        {
+            Debug.Log("spawn totally new character at start pos.");
+            SpawnNewPlayer();
+        }
 
         
+    }
+
+    private void SpawnNewPlayer()
+    {
+        //look for the spawn point. 
+        Transform startPos = GameObject.FindGameObjectWithTag("StartPos").transform;
+        playerCharacter = Instantiate(characters[0], new Vector3(startPos.position.x, startPos.position.y, startPos.position.z), Quaternion.identity);
     }
 
     private void BattleSpriteAction_OnPlayerDeath(object sender, EventArgs e)
@@ -63,22 +91,32 @@ public class GameManager : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Alpha1))
             {
-                saveData[0] = new SaveData(currentLevel, CharacterType.UnityChan, playerCharacter.position.x, playerCharacter.position.y);
+                saveData[0] = new SaveData(currentLevel, CharacterType.UnityChan, playerCharacter.transform.position.x, playerCharacter.transform.position.y);
+                activeSaveData = saveData[0];
             }
             else if (Input.GetKeyDown(KeyCode.Alpha2))
             {
-                saveData[1] = new SaveData(currentLevel, CharacterType.UnityChan, playerCharacter.position.x, playerCharacter.position.y);
-
+                saveData[1] = new SaveData(currentLevel, CharacterType.Toko, playerCharacter.transform.position.x, playerCharacter.transform.position.y);
+                activeSaveData = saveData[1];
             }
             else if (Input.GetKeyDown(KeyCode.Alpha3))
             {
-                saveData[2] = new SaveData(currentLevel, CharacterType.UnityChan, playerCharacter.position.x, playerCharacter.position.y);
+                saveData[2] = new SaveData(currentLevel, CharacterType.Holger, playerCharacter.transform.position.x, playerCharacter.transform.position.y);
+                activeSaveData = saveData[2];
             }
 
             //reload
-            else if(Input.GetKeyDown(KeyCode.F1))
+            else if(Input.GetKeyDown(KeyCode.F1) )
             {
                 ReloadSave(0);
+            }
+            else if (Input.GetKeyDown(KeyCode.F2))
+            {
+                ReloadSave(1);
+            }
+            else if (Input.GetKeyDown(KeyCode.F3))
+            {
+                ReloadSave(2);
             }
         }
         
@@ -112,11 +150,23 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            SceneManager.LoadScene(0);
+            activeSaveData = saveData[index];
+            SceneManager.LoadScene(0); //QQQQ  change to the actual level next time
+            //OnReloadSaveFile?.Invoke(this, activeSaveData);
+
+            //QQQQ
+            Invoke("RespawnCharacterWithReload", 0.15f);
+            //RespawnCharacterWithReload();
         }
     }
 
-    public void SetCharacter(Transform character)
+    private void RespawnCharacterWithReload()
+    {
+        playerCharacter = Instantiate(characters[(int)activeSaveData.characterType], 
+            new Vector3(activeSaveData.savePosX, activeSaveData.savePosY, 0), Quaternion.identity);
+    }
+
+    public void SetCharacter(GameObject character)
     {
         this.playerCharacter = character;
     }
@@ -157,7 +207,7 @@ public enum GameState
 
 public enum CharacterType
 {
-    NONE,
+    NONE = -1,
     UnityChan,
     Toko,
     Holger

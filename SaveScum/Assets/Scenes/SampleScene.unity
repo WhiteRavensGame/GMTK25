@@ -373,6 +373,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Unitychan_Battle(Sword)
       objectReference: {fileID: 0}
+    - target: {fileID: 8004263168600205197, guid: c437cdff18d8ceb45b63c74e2b500f84, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1584,8 +1588,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d275b1ebc77aa244292708660d130806, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  activeSaveData: 0
-  maxTimeLeft: 5
+  saveData: []
+  characters:
+  - {fileID: 8004263168600205197, guid: c437cdff18d8ceb45b63c74e2b500f84, type: 3}
+  - {fileID: 8848165349498617998, guid: 9b31cc99609b1fd4cb3671c0e9340a66, type: 3}
+  - {fileID: 6733701356897026842, guid: 38ef2d17e3cec3d49989c3513823f445, type: 3}
+  maxTimeLeft: 99
+  maxLoseTimer: 2
 --- !u!1 &1373809821
 GameObject:
   m_ObjectHideFlags: 0
@@ -2708,6 +2717,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1562042063}
   m_CullTransparentMesh: 1
+--- !u!1 &1572753495
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1572753496}
+  m_Layer: 0
+  m_Name: START_POS
+  m_TagString: StartPos
+  m_Icon: {fileID: 7250588514170254948, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1572753496
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1572753495}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.3489877, y: 0.25028718, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1609923184
 GameObject:
   m_ObjectHideFlags: 0
@@ -3495,6 +3535,7 @@ SceneRoots:
   - {fileID: 535087084}
   - {fileID: 2120380947}
   - {fileID: 930196274}
+  - {fileID: 1572753496}
   - {fileID: 287384238}
   - {fileID: 677567312}
   - {fileID: 1349233568}

@@ -4,10 +4,10 @@ using UnityEngine;
 [Serializable]
 public class SaveData
 {
-    private int level;
-    private CharacterType characterType;
-    private float savePosX;
-    private float savePosY;
+    public int level { get; }
+    public CharacterType characterType { get; }
+    public float savePosX { get; }
+    public float savePosY { get; }
 
     public SaveData(int level, CharacterType characterType, float savePosX, float savePosY)
     {
