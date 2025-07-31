@@ -64,7 +64,8 @@ public class BattleSpriteAction : MonoBehaviour
         if (axis != 0)
         {
             spriteRenderer.flipX = axis < 0;
-            velocity.x = axis * 2;
+			float moveXVelMultiplier = 2;
+            velocity.x = axis * moveXVelMultiplier;
         }
         rig2d.linearVelocity = velocity;
 
