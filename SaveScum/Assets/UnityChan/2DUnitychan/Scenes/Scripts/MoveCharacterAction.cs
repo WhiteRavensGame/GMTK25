@@ -18,6 +18,8 @@ public class MoveCharacterAction : MonoBehaviour
 	[SerializeField, HideInInspector]SpriteRenderer spriteRenderer;
 	[SerializeField, HideInInspector]Rigidbody2D rig2d;
 
+	private bool canJump = true;
+
 	public int hp = 4;
 
 	void Awake ()
@@ -33,15 +35,15 @@ public class MoveCharacterAction : MonoBehaviour
 		bool isDown = Input.GetAxisRaw ("Vertical") < 0;
 
         Vector2 velocity = rig2d.linearVelocity;
-		if (Input.GetButtonDown ("Jump")) {
+		if (Input.GetButtonDown ("Jump") && canJump) {
 			velocity.y = 5;
+			canJump = false;
 		}
 		if (axis != 0){
 			spriteRenderer.flipX = axis < 0;
             velocity.x = axis * 2;
         }
         rig2d.linearVelocity = velocity;
-
 
 		var distanceFromGround = Physics2D.Raycast (transform.position, Vector3.down, 1, groundMask);
 
@@ -50,6 +52,12 @@ public class MoveCharacterAction : MonoBehaviour
 		animator.SetFloat (hashGroundDistance, distanceFromGround.distance == 0 ? 99 : distanceFromGround.distance - characterHeightOffset);
 		animator.SetFloat (hashFallSpeed, rig2d.linearVelocity.y);
 		animator.SetFloat (hashSpeed, Mathf.Abs (axis));
+
+		//QQQQ hardcoded jump
+		if(animator.GetFloat("GroundDistance") < 0.2f && animator.GetFloat("FallSpeed") < 0)
+		{
+			canJump = true;
+		}
 
 	}
     
