@@ -4,7 +4,9 @@ using System;
 
 public class BattleSpriteAction : MonoBehaviour
 {
-	static int hashSpeed = Animator.StringToHash ("Speed");
+    public static event EventHandler OnPlayerDeath;
+
+    static int hashSpeed = Animator.StringToHash ("Speed");
 	static int hashFallSpeed = Animator.StringToHash ("FallSpeed");
 	static int hashGroundDistance = Animator.StringToHash ("GroundDistance");
 	static int hashIsCrouch = Animator.StringToHash ("IsCrouch");
@@ -23,10 +25,13 @@ public class BattleSpriteAction : MonoBehaviour
 	[SerializeField, HideInInspector]SpriteRenderer spriteRenderer;
 	[SerializeField, HideInInspector]Rigidbody2D rig2d;
 
+	[SerializeField] public CharacterType characterType;
+
 	public int hp = 4;
 
 	private bool canJump = true;
 	private bool isAlive = true;
+
 
 	void Awake ()
 	{
@@ -38,6 +43,7 @@ public class BattleSpriteAction : MonoBehaviour
     void Start()
     {
 		GameManager.Instance.OnTimeUp += TimeUp;
+		
     }
 
     void Update ()
@@ -84,6 +90,11 @@ public class BattleSpriteAction : MonoBehaviour
         }
     }
 
+	public CharacterType GetCharacterType()
+	{
+		return characterType;
+	}
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("DamageObject"))
@@ -109,10 +120,10 @@ public class BattleSpriteAction : MonoBehaviour
 		if (!isAlive)
 			return;
 
+		hp = 0;
         animator.SetBool(hashIsDead, true);
         isAlive = false;
-		Debug.Log("KIll player");
-
+		OnPlayerDeath?.Invoke(this, EventArgs.Empty);
         animator.SetTrigger(hashDamage);
     }
 

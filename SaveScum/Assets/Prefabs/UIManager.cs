@@ -5,6 +5,7 @@ public class UIManager : MonoBehaviour
     public static UIManager Instance;
 
     [SerializeField] private GameObject levelClearPanel;
+    [SerializeField] private GameObject levelFailedPanel;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
@@ -15,8 +16,12 @@ public class UIManager : MonoBehaviour
             Destroy(this.gameObject);
     }
 
-    private void ShowLevelComplete()
+    public void ShowLevelComplete()
     {
         levelClearPanel.SetActive(true);
+    }
+    public void ShowLevelFailed()
+    {
+        levelFailedPanel.SetActive(true);
     }
 }
