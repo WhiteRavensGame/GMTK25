@@ -93,7 +93,7 @@ public class BattleSpriteAction : MonoBehaviour
 		}
     }
 
-	private void HurtPlayer(int damage = 999)
+    private void HurtPlayer(int damage = 999)
 	{
 		hp -= damage;
 		if(hp <= 0)
@@ -111,7 +111,9 @@ public class BattleSpriteAction : MonoBehaviour
 
         animator.SetBool(hashIsDead, true);
         isAlive = false;
-		
+		Debug.Log("KIll player");
+
+        animator.SetTrigger(hashDamage);
     }
 
 	private void RevivePlayer()

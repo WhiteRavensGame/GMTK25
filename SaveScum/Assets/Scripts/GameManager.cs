@@ -42,6 +42,11 @@ public class GameManager : MonoBehaviour
             
     }
 
+    public float GetTimeLeft()
+    {
+        return timeLeft;
+    }
+
     private void RestartLevel()
     {
 
