@@ -12,6 +12,7 @@ public class UIManager : MonoBehaviour
 
     [Header("Buttons for Events")]
     [SerializeField] private Button hardResetLevelButton;
+    [SerializeField] private Button nextLevelButton;
 
     [Header("Sprites")]
     [SerializeField]
@@ -34,6 +35,10 @@ public class UIManager : MonoBehaviour
         hardResetLevelButton.onClick.AddListener(() =>
         {
             GameManager.Instance.HardResetLevel();
+        });
+        nextLevelButton.onClick.AddListener(() =>
+        {
+            GameManager.Instance.LoadNextLevel();
         });
 
         GameManager.Instance.OnLevelReload += GameManager_OnLevelReload;

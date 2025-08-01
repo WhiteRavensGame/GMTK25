@@ -167,6 +167,8 @@ public class GameManager : MonoBehaviour
         else
         {
             activeSaveData = saveData[index];
+            currentLevel = activeSaveData.level;
+            
             SceneManager.LoadScene(activeSaveData.level);
             //OnReloadSaveFile?.Invoke(this, activeSaveData);
             
@@ -211,11 +213,20 @@ public class GameManager : MonoBehaviour
         ReloadSave(-1);
     }
 
+    public void LoadNextLevel()
+    {
+        currentLevel++;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        Invoke("RespawnCharacterHardReset", 0.15f);
+        ResetTimer();
+    }
+
     public void LevelWin()
     {
         UIManager.Instance.ShowLevelComplete();
         gameState = GameState.Win;
     }
+
     private void LevelLose()
     {
         UIManager.Instance.ShowLevelFailed();

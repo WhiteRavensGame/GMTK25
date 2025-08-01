@@ -847,7 +847,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2843250843375728573
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1192,7 +1192,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &3571005731299766993
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1992,7 +1992,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1827763789314364087
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2723,6 +2723,8 @@ MonoBehaviour:
   - {fileID: 6491455773700105532}
   - {fileID: 3438259017821389421}
   - {fileID: 4708760072753627175}
+  hardResetLevelButton: {fileID: 7316205542571093864}
+  nextLevelButton: {fileID: 2651804419065536528}
   characterSprites:
   - {fileID: 21300000, guid: c1bacafd8b1744df58882b1c6cab3f3b, type: 3}
   - {fileID: 21300000, guid: 73433643135e344c4a9f935f006154bb, type: 3}
