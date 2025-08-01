@@ -52,4 +52,8 @@ MonoBehaviour:
   levelInfos:
   - {fileID: 11400000, guid: 3081ee4f3849a404bb5035fab76b0913, type: 2}
   - {fileID: 11400000, guid: 105ec0b9fbbacf640a392f115328af4c, type: 2}
+  - {fileID: 11400000, guid: 90a31f99539868c4ea0f9d459fd9098b, type: 2}
+  - {fileID: 11400000, guid: 0bd50da79c553fe4ba794cf613e858cb, type: 2}
+  - {fileID: 11400000, guid: 4b8b8ddf82e4c9a479440109193d31a0, type: 2}
+  - {fileID: 11400000, guid: 4347d6c87bd80334ab9fd1ae30c7199a, type: 2}
   maxLoseTimer: 1.5

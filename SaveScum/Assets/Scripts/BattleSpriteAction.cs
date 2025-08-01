@@ -111,6 +111,15 @@ public class BattleSpriteAction : MonoBehaviour
 		}
     }
 
+    private void OnTriggerEnter2D(Collider2D collider)
+    {
+        if (collider.gameObject.CompareTag("DamageObject"))
+        {
+            HurtPlayer();
+            Console.WriteLine("Damage player (trigger)");
+        }
+    }
+
     private void HurtPlayer(int damage = 999)
 	{
 		hp -= damage;
