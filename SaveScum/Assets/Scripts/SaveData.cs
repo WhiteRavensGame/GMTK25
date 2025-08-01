@@ -5,11 +5,11 @@ using UnityEngine;
 public class SaveData
 {
     public int level { get; }
-    public CharacterType characterType { get; }
+    public PlayerCharacter characterType { get; }
     public float savePosX { get; }
     public float savePosY { get; }
 
-    public SaveData(int level, CharacterType characterType, float savePosX, float savePosY)
+    public SaveData(int level, PlayerCharacter characterType, float savePosX, float savePosY)
     {
         this.level = level;
         this.characterType = characterType;

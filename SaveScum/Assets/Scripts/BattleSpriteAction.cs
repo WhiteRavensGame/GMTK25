@@ -26,7 +26,7 @@ public class BattleSpriteAction : MonoBehaviour
 	[SerializeField, HideInInspector]SpriteRenderer spriteRenderer;
 	[SerializeField, HideInInspector]Rigidbody2D rig2d;
 
-	[SerializeField] public CharacterType characterType;
+	[SerializeField] public PlayerCharacter characterType;
 
 	public int hp = 4;
 
@@ -91,7 +91,13 @@ public class BattleSpriteAction : MonoBehaviour
         }
     }
 
-	public CharacterType GetCharacterType()
+    private void OnDestroy()
+    {
+        GameManager.Instance.OnTimeUp -= TimeUp;
+		Debug.Log("Destructor called");
+    }
+
+    public PlayerCharacter GetCharacterType()
 	{
 		return characterType;
 	}

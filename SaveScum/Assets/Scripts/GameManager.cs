@@ -13,15 +13,16 @@ public class GameManager : MonoBehaviour
     [SerializeField] private SaveData[] saveData;
     private SaveData activeSaveData;
 
-    [Header("Characters")]
+    [Header("Databases")]
     [SerializeField] private GameObject[] characters;
+    [SerializeField] private LevelInfo[] levelInfos;
 
     [Header("Game balance")]
-    [SerializeField]
-    private float maxTimeLeft = 3f;
+    private int currentLevel;
     private float timeLeft;
-    private int currentLevel = 1;
+
     private GameObject playerCharacter;
+    private PlayerCharacter playerCharacterType = PlayerCharacter.UnityChan;
 
     private GameState gameState = GameState.Playing;
 
@@ -31,8 +32,7 @@ public class GameManager : MonoBehaviour
     
 
     public event EventHandler OnTimeUp;
-    public event EventHandler<SaveData> OnReloadSaveFile;
-    public event EventHandler OnFullLevelReload;
+    public event EventHandler OnLevelReload;
 
 
 
@@ -50,7 +50,8 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         Debug.Log("GM START");
-        timeLeft = maxTimeLeft;
+        ResetTimer();
+        saveData = new SaveData[3];
 
         BattleSpriteAction.OnPlayerDeath += BattleSpriteAction_OnPlayerDeath;
 
@@ -91,22 +92,29 @@ public class GameManager : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Alpha1))
             {
-                saveData[0] = new SaveData(currentLevel, CharacterType.UnityChan, playerCharacter.transform.position.x, playerCharacter.transform.position.y);
+                saveData[0] = new SaveData(currentLevel, playerCharacterType, playerCharacter.transform.position.x, playerCharacter.transform.position.y);
                 activeSaveData = saveData[0];
+                UIManager.Instance.SaveAtSlot(0, activeSaveData);
             }
             else if (Input.GetKeyDown(KeyCode.Alpha2))
             {
-                saveData[1] = new SaveData(currentLevel, CharacterType.Toko, playerCharacter.transform.position.x, playerCharacter.transform.position.y);
+                saveData[1] = new SaveData(currentLevel, playerCharacterType, playerCharacter.transform.position.x, playerCharacter.transform.position.y);
                 activeSaveData = saveData[1];
+                UIManager.Instance.SaveAtSlot(1, activeSaveData);
             }
             else if (Input.GetKeyDown(KeyCode.Alpha3))
             {
-                saveData[2] = new SaveData(currentLevel, CharacterType.Holger, playerCharacter.transform.position.x, playerCharacter.transform.position.y);
+                saveData[2] = new SaveData(currentLevel, playerCharacterType, playerCharacter.transform.position.x, playerCharacter.transform.position.y);
                 activeSaveData = saveData[2];
+                UIManager.Instance.SaveAtSlot(2, activeSaveData);
             }
 
-            //reload
-            else if(Input.GetKeyDown(KeyCode.F1) )
+        }
+
+        //player can load during playing or when they lost. 
+        if (gameState == GameState.Playing || gameState == GameState.Lose)
+        {
+            if (Input.GetKeyDown(KeyCode.F1))
             {
                 ReloadSave(0);
             }
@@ -121,7 +129,8 @@ public class GameManager : MonoBehaviour
         }
         
 
-        if(gameState == GameState.Playing)
+
+        if (gameState == GameState.Playing)
         {
             timeLeft -= Time.deltaTime;
             if(timeLeft <= 0)
@@ -142,33 +151,53 @@ public class GameManager : MonoBehaviour
             
     }
 
-    public void ReloadSave(int index)
+    public void ReloadSave(int index = -1)
     {
-        if (saveData[index] == null)
+        if(index == -1) //hard reset flag
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            Invoke("RespawnCharacterHardReset", 0.15f);
+            ResetTimer();
+            
+        }
+        else if (saveData[index] == null)
         {
             Debug.Log($"ERROR. NO SAVE FOUND AT INDEX {index}");
         }
         else
         {
             activeSaveData = saveData[index];
-            SceneManager.LoadScene(0); //QQQQ  change to the actual level next time
+            SceneManager.LoadScene(activeSaveData.level);
             //OnReloadSaveFile?.Invoke(this, activeSaveData);
-
+            
             //QQQQ
             Invoke("RespawnCharacterWithReload", 0.15f);
-            //RespawnCharacterWithReload();
+            ResetTimer();
         }
+    }
+
+    private void ResetTimer()
+    {
+        timeLeft = levelInfos[currentLevel].timeLimit;
+    }
+    private void RespawnCharacterHardReset()
+    {
+        Transform startPos = GameObject.FindGameObjectWithTag("StartPos").transform;
+        playerCharacter = Instantiate(characters[(int)playerCharacterType], startPos.position, Quaternion.identity);
+        
+        gameState = GameState.Playing;
+
+        OnLevelReload?.Invoke(this, EventArgs.Empty);
     }
 
     private void RespawnCharacterWithReload()
     {
         playerCharacter = Instantiate(characters[(int)activeSaveData.characterType], 
             new Vector3(activeSaveData.savePosX, activeSaveData.savePosY, 0), Quaternion.identity);
-    }
 
-    public void SetCharacter(GameObject character)
-    {
-        this.playerCharacter = character;
+        gameState = GameState.Playing;
+
+        OnLevelReload?.Invoke(this, EventArgs.Empty);
     }
 
     public float GetTimeLeft()
@@ -176,9 +205,10 @@ public class GameManager : MonoBehaviour
         return timeLeft;
     }
 
-    public void RestartLevel()
+    public void HardResetLevel()
     {
-        
+        Debug.Log("Force hard reset (aka load autosave at start of level)");
+        ReloadSave(-1);
     }
 
     public void LevelWin()
@@ -205,7 +235,7 @@ public enum GameState
     Intermission
 }
 
-public enum CharacterType
+public enum PlayerCharacter
 {
     NONE = -1,
     UnityChan,
