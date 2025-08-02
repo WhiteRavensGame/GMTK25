@@ -1,13 +1,25 @@
 using System;
 using UnityEngine;
 
-[Serializable]
+[System.Serializable]
 public class SaveData
 {
-    public int level { get; }
-    public PlayerCharacter characterType { get; }
-    public float savePosX { get; }
-    public float savePosY { get; }
+    public int level;
+    public PlayerCharacter characterType;
+    public float savePosX;
+    public float savePosY;
+
+    public bool isUsed;
+
+    public SaveData()
+    {
+        level = 0;
+        characterType = PlayerCharacter.UnityChan;
+        savePosX = -1;
+        savePosY = 0;
+
+        isUsed = false;
+    }
 
     public SaveData(int level, PlayerCharacter characterType, float savePosX, float savePosY)
     {
@@ -15,5 +27,7 @@ public class SaveData
         this.characterType = characterType;
         this.savePosX = savePosX;
         this.savePosY = savePosY;
+
+        isUsed = true;
     }
 }

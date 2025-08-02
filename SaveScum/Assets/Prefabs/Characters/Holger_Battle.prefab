@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 7087641600988304297}
   - component: {fileID: 252407147820092116}
   - component: {fileID: 3470348116869547918}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: Holger_Battle
   m_TagString: Player
   m_Icon: {fileID: 0}

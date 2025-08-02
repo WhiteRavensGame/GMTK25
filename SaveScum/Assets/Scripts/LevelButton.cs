@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -8,6 +9,8 @@ public class LevelButton : MonoBehaviour
     [SerializeField] private float pressOffset = -0.15f;
     [SerializeField] private float pressSpeed = 2f;
     [SerializeField] private Color pressColor = Color.green;
+
+    [SerializeField] private List<GameObject> pressers;
 
     private Color originalColor;
 
@@ -26,6 +29,7 @@ public class LevelButton : MonoBehaviour
         originalColor = spriteRenderer.color;
         unpressedPosition = transform.position;
         pressedPosition = unpressedPosition + new Vector3(0, pressOffset, 0);
+        pressers = new List<GameObject>();
     }
 
     // Update is called once per frame
@@ -50,6 +54,9 @@ public class LevelButton : MonoBehaviour
         if(collision.gameObject.CompareTag("Player"))
         {
             isSteppedOn = true;
+            if(!pressers.Contains(collision.gameObject))
+                pressers.Add(collision.gameObject);
+
         }
     }
 
@@ -57,7 +64,13 @@ public class LevelButton : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            isSteppedOn = false;
+            if (pressers.Contains(collision.gameObject))
+                pressers.Remove(collision.gameObject);
+            
+            if(pressers.Count <= 0)
+                isSteppedOn = false;
+            
         }
     }
+
 }

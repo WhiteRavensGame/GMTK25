@@ -13,6 +13,7 @@ public class UIManager : MonoBehaviour
     [Header("Buttons for Events")]
     [SerializeField] private Button hardResetLevelButton;
     [SerializeField] private Button nextLevelButton;
+    [SerializeField] private Button backToMainMenuButton;
 
     [Header("Sprites")]
     [SerializeField]
@@ -39,6 +40,10 @@ public class UIManager : MonoBehaviour
         nextLevelButton.onClick.AddListener(() =>
         {
             GameManager.Instance.LoadNextLevel();
+        });
+        backToMainMenuButton.onClick.AddListener(() =>
+        {
+            GameManager.Instance.BeginReturnToMainMenu();
         });
 
         GameManager.Instance.OnLevelReload += GameManager_OnLevelReload;

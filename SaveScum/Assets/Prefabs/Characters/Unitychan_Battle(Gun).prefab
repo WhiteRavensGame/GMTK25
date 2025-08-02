@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 3753513520641820615}
   - component: {fileID: 8124950709232252731}
   - component: {fileID: 4938061549213427448}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: Unitychan_Battle(Gun)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -242,4 +242,5 @@ MonoBehaviour:
   animator: {fileID: 0}
   spriteRenderer: {fileID: 0}
   rig2d: {fileID: 0}
+  characterType: 0
   hp: 4

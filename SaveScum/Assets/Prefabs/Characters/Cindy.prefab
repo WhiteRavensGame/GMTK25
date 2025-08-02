@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 1378082145571724356}
   - component: {fileID: 3755397695558424157}
   - component: {fileID: 5626193138918808355}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: Cindy
   m_TagString: Untagged
   m_Icon: {fileID: 0}

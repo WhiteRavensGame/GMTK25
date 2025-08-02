@@ -30,7 +30,7 @@ public class UISaveSlot : MonoBehaviour
 
         int index = (int)character;
         characterSprite.sprite = sprite;
-        levelText.text = (level + 1).ToString();
+        levelText.text = level.ToString();
     }
 
 }

@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Data management")]
     [SerializeField] private SaveData[] saveData;
-    private SaveData activeSaveData;
+    private int activeSaveIndex;
 
     [Header("Databases")]
     [SerializeField] private GameObject[] characters;
@@ -29,7 +29,7 @@ public class GameManager : MonoBehaviour
     //other timers
     private float loseTimer = 0;
     [SerializeField] private float maxLoseTimer = 2;
-    
+
 
     public event EventHandler OnTimeUp;
     public event EventHandler OnLevelReload;
@@ -43,6 +43,13 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(this.gameObject);
+            Debug.Log("AWAKER SHIT");
+
+            saveData = new SaveData[3];
+            for (int i = 0; i < saveData.Length; i++)
+            {
+                saveData[i] = new SaveData();
+            }
         }
         else Destroy(this.gameObject);
     }
@@ -51,12 +58,11 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("GM START");
         ResetTimer();
-        saveData = new SaveData[3];
 
         BattleSpriteAction.OnPlayerDeath += BattleSpriteAction_OnPlayerDeath;
 
         //There was a save data used to load. Load that save instead. 
-        if (activeSaveData != null)
+        if (saveData[activeSaveIndex] != null && saveData[activeSaveIndex].isUsed)
         {
             Debug.Log("respawn via save point");
             RespawnCharacterWithReload();
@@ -67,8 +73,61 @@ public class GameManager : MonoBehaviour
             SpawnNewPlayer();
         }
 
-        
     }
+
+    public bool HasSaveFileAtIndex(int index)
+    {
+        
+        if (index < 0 || index >= saveData.Length)
+            return false;
+        else if (!saveData[index].isUsed)
+        {
+            Debug.Log($"{saveData[index].level}, {saveData[index].isUsed.ToString()}");
+
+            return false;
+        }
+            
+        else
+        {   //save data exists in this index slot.
+            Debug.Log($"{saveData[index].level}, {saveData[index].characterType.ToString()}");
+                return true;
+        }
+            
+    }
+
+    public void BeginReturnToMainMenu()
+    {
+        SceneManager.LoadScene(0);
+        Invoke("ReturnToMainMenu", 0.15f);
+    }
+
+    private void ReturnToMainMenu()
+    {
+        currentLevel = 0; //restart back to main menu
+        RespawnCharacterHardReset();
+        ResetTimer();
+    }
+
+    //Only call these methods from Main Menu-----
+    public void StartNewGameFromMainMenu(int slot)
+    {
+        
+        SetActiveSaveSlot(slot-1);
+        LoadNextLevel();
+        InitializeSaveData(slot - 1);
+    }
+
+    private void InitializeSaveData(int index)
+    {
+        //QQQQ. Have a more properly defined save starting position. 
+        //saveData[index] = new SaveData(1, playerCharacterType, -1.5f, 0);
+    }
+
+    public void SetActiveSaveSlot(int index)
+    {
+        activeSaveIndex = index;
+    }
+    //------------------------------------------
 
     private void SpawnNewPlayer()
     {
@@ -92,21 +151,24 @@ public class GameManager : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Alpha1))
             {
-                saveData[0] = new SaveData(currentLevel, playerCharacterType, playerCharacter.transform.position.x, playerCharacter.transform.position.y);
-                activeSaveData = saveData[0];
-                UIManager.Instance.SaveAtSlot(0, activeSaveData);
+                //saveData[0] = new SaveData(currentLevel, playerCharacterType, playerCharacter.transform.position.x, playerCharacter.transform.position.y);
+                //activeSaveData = saveData[0];
+                saveData[activeSaveIndex] = new SaveData(currentLevel, playerCharacterType, playerCharacter.transform.position.x, playerCharacter.transform.position.y);
+                UIManager.Instance.SaveAtSlot(activeSaveIndex, saveData[activeSaveIndex]);
             }
             else if (Input.GetKeyDown(KeyCode.Alpha2))
             {
-                saveData[1] = new SaveData(currentLevel, playerCharacterType, playerCharacter.transform.position.x, playerCharacter.transform.position.y);
-                activeSaveData = saveData[1];
-                UIManager.Instance.SaveAtSlot(1, activeSaveData);
+                //saveData[1] = new SaveData(currentLevel, playerCharacterType, playerCharacter.transform.position.x, playerCharacter.transform.position.y);
+                //activeSaveData = saveData[1];
+                saveData[activeSaveIndex] = new SaveData(currentLevel, playerCharacterType, playerCharacter.transform.position.x, playerCharacter.transform.position.y);
+                UIManager.Instance.SaveAtSlot(activeSaveIndex, saveData[activeSaveIndex]);
             }
             else if (Input.GetKeyDown(KeyCode.Alpha3))
             {
-                saveData[2] = new SaveData(currentLevel, playerCharacterType, playerCharacter.transform.position.x, playerCharacter.transform.position.y);
-                activeSaveData = saveData[2];
-                UIManager.Instance.SaveAtSlot(2, activeSaveData);
+                //saveData[2] = new SaveData(currentLevel, playerCharacterType, playerCharacter.transform.position.x, playerCharacter.transform.position.y);
+                //activeSaveData = saveData[2];
+                saveData[activeSaveIndex] = new SaveData(currentLevel, playerCharacterType, playerCharacter.transform.position.x, playerCharacter.transform.position.y);
+                UIManager.Instance.SaveAtSlot(activeSaveIndex, saveData[activeSaveIndex]);
             }
 
         }
@@ -166,10 +228,9 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            activeSaveData = saveData[index];
-            currentLevel = activeSaveData.level;
+            currentLevel = saveData[activeSaveIndex].level;
             
-            SceneManager.LoadScene(activeSaveData.level);
+            SceneManager.LoadScene(saveData[activeSaveIndex].level);
             //OnReloadSaveFile?.Invoke(this, activeSaveData);
             
             //QQQQ
@@ -194,8 +255,8 @@ public class GameManager : MonoBehaviour
 
     private void RespawnCharacterWithReload()
     {
-        playerCharacter = Instantiate(characters[(int)activeSaveData.characterType], 
-            new Vector3(activeSaveData.savePosX, activeSaveData.savePosY, 0), Quaternion.identity);
+        playerCharacter = Instantiate(characters[(int)saveData[activeSaveIndex].characterType], 
+            new Vector3(saveData[activeSaveIndex].savePosX, saveData[activeSaveIndex].savePosY, 0), Quaternion.identity);
 
         gameState = GameState.Playing;
 

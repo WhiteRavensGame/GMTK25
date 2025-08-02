@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 8093645381076431805}
   - component: {fileID: 3383251189182727776}
   - component: {fileID: -4320688834512561979}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: Toko
   m_TagString: Untagged
   m_Icon: {fileID: 0}
