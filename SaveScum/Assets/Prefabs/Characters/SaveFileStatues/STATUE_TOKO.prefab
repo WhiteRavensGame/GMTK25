@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 4952810233309700321}
   m_Layer: 10
   m_Name: STATUE_TOKO
-  m_TagString: Player
+  m_TagString: Statue
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

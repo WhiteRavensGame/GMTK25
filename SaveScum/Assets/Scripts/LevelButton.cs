@@ -57,7 +57,7 @@ public class LevelButton : MonoBehaviour
         //prevents double quick presses of the button. 
         if (Time.time - lastTriggerTime < triggerCooldown) return;
 
-        if(collision.gameObject.CompareTag("Player"))
+        if(collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Statue"))
         {
             isSteppedOn = true;
             Debug.Log("LASERS ON!");
@@ -70,7 +70,7 @@ public class LevelButton : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Statue"))
         {
             if (pressers.Contains(collision.gameObject))
                 pressers.Remove(collision.gameObject);

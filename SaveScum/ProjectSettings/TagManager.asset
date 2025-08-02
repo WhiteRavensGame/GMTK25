@@ -7,6 +7,8 @@ TagManager:
   - DamageObject
   - Goal
   - StartPos
+  - Miniboss
+  - Statue
   layers:
   - Default
   - TransparentFX
