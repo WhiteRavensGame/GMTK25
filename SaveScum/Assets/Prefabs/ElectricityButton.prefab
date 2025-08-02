@@ -10,10 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 3595959911102214519}
   - component: {fileID: 12566661819552154}
-  - component: {fileID: 9185779545587541509}
   - component: {fileID: 7685599947914704928}
+  - component: {fileID: 8593638321165798607}
   m_Layer: 0
-  m_Name: LevelButton
+  m_Name: ElectricityButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -89,22 +89,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &9185779545587541509
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6867709882319249721}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2c995c2c1d57bb14c9cc6ad5557c125f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  spriteRenderer: {fileID: 12566661819552154}
-  pressOffset: -0.15
-  pressSpeed: 10
-  pressColor: {r: 0, g: 1, b: 0, a: 1}
 --- !u!61 &7685599947914704928
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -151,3 +135,20 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1.3574605}
   m_EdgeRadius: 0
+--- !u!114 &8593638321165798607
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6867709882319249721}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fba5353578b978468e5304decb7eea2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spriteRenderer: {fileID: 12566661819552154}
+  pressOffset: -0.15
+  pressSpeed: 2
+  pressColor: {r: 0, g: 1, b: 0, a: 1}
+  blackOutFill: {fileID: 0}

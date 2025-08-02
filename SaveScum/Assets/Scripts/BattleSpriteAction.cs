@@ -29,8 +29,9 @@ public class BattleSpriteAction : MonoBehaviour
 	[SerializeField] public PlayerCharacter characterType;
 
 	public int hp = 4;
+    private float frictionFactor = 12;
 
-	private bool canJump = true;
+    private bool canJump = true;
 	private bool isAlive = true;
 
 
@@ -66,11 +67,11 @@ public class BattleSpriteAction : MonoBehaviour
             spriteRenderer.flipX = axis < 0;
 			float moveXVelMultiplier = 2;
             velocity.x = axis * moveXVelMultiplier;
+			//velocity.x = Mathf.Lerp(velocity.x, axis * moveXVelMultiplier, Time.deltaTime * frictionFactor);
         }
-		else //removes the horizontal movement when left/right released. 
+        else //removes the horizontal movement when left/right released. 
 		{
 			//velocity.x = 0;
-			float frictionFactor = 3;
 			velocity.x = Mathf.Lerp(velocity.x, 0, Time.deltaTime * frictionFactor);
         }
         rig2d.linearVelocity = velocity;

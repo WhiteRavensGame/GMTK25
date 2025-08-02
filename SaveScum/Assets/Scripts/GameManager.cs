@@ -33,6 +33,7 @@ public class GameManager : MonoBehaviour
 
     public int randomizedNumber;
     private bool lasersOnGlobally;
+    private bool electricityOnGlobally;
 
     public event EventHandler OnTimeUp;
     public event EventHandler OnLevelReload;
@@ -59,6 +60,7 @@ public class GameManager : MonoBehaviour
             if (randomizedNumber / 100 == 6) 
                 randomizedNumber -= UnityEngine.Random.Range(100, 200);
             lasersOnGlobally = true;
+            electricityOnGlobally = false;
         }
         else Destroy(this.gameObject);
     }
@@ -91,6 +93,15 @@ public class GameManager : MonoBehaviour
     public void SetLasersActive(bool active)
     {
         lasersOnGlobally = active;
+    }
+
+    public bool GetElectricityActive()
+    {
+        return electricityOnGlobally;
+    }
+    public void SetElectricityActive(bool active)
+    {
+        electricityOnGlobally = active;
     }
 
     public bool HasSaveFileAtIndex(int index)

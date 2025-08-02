@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8336248875824922071}
   - component: {fileID: 7087641600988304297}
   - component: {fileID: 252407147820092116}
-  - component: {fileID: 3470348116869547918}
+  - component: {fileID: 8001668057044697186}
   - component: {fileID: 353079842238246685}
   m_Layer: 0
   m_Name: BOSS_Holger
@@ -84,7 +84,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 05c264ec93e5a47f59d69344b683425e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
+  m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 1, y: 1}
@@ -224,7 +224,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &3470348116869547918
+--- !u!114 &8001668057044697186
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -233,7 +233,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6733701356897026842}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 27a557aa9f1344bc7a06e7e0ae3950f4, type: 3}
+  m_Script: {fileID: 11500000, guid: 8d2ac21f12868294790c079e2257b8e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   characterHeightOffset: 0.2
@@ -245,6 +245,8 @@ MonoBehaviour:
   rig2d: {fileID: 0}
   characterType: 0
   hp: 4
+  slamParticle: {fileID: 6404721307789850334, guid: 5ac79417246654347a44cb242d4ba392, type: 3}
+  bossState: 0
 --- !u!61 &353079842238246685
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -279,7 +281,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.0009033531, y: 0.023487747}
+  m_Offset: {x: -0.38967177, y: -0.0002503395}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -289,5 +291,5 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.1792773, y: 0.35453233}
+  m_Size: {x: 0.55871636, y: 0.48409724}
   m_EdgeRadius: 0
