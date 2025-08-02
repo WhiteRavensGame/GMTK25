@@ -66,6 +66,11 @@ public class MinibossScripted : MonoBehaviour
     {
         startPos = transform.position;
 
+        Invoke("DelayStatueSearch", 0.5f);
+    }
+
+    private void DelayStatueSearch()
+    {
         GameObject statue = GameObject.FindGameObjectWithTag("Statue");
         if (statue != null)
         {
@@ -202,9 +207,9 @@ public class MinibossScripted : MonoBehaviour
 
         animator.SetFloat(hashFallSpeed, rig2d.linearVelocity.y);
         //animator.SetFloat(hashSpeed, Mathf.Abs(axis));
-        if (Input.GetKeyDown(KeyCode.Z)) { animator.SetTrigger(hashAttack1); }
+        //if (Input.GetKeyDown(KeyCode.Z)) { animator.SetTrigger(hashAttack1); }
         if (Input.GetKeyDown(KeyCode.X)) { animator.SetTrigger(hashAttack2); }
-        if (Input.GetKeyDown(KeyCode.C)) { animator.SetTrigger(hashAttack3); }
+        //if (Input.GetKeyDown(KeyCode.C)) { animator.SetTrigger(hashAttack3); }
 
         //// flip sprite
         //if (axis != 0)

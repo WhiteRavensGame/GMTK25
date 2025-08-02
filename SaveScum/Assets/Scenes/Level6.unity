@@ -3690,6 +3690,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: STATUE_Unitychan
       objectReference: {fileID: 0}
+    - target: {fileID: 8004263168600205197, guid: b43ce1b5ef6528d4f952a5c7c916156c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

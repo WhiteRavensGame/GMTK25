@@ -54,7 +54,10 @@ public class GameManager : MonoBehaviour
                 saveData[i] = new SaveData();
             }
 
-            randomizedNumber = UnityEngine.Random.Range(456, 987);
+            randomizedNumber = UnityEngine.Random.Range(123, 987);
+            //prevents the hundredths place to be 6 because of the loophole 69420. 
+            if (randomizedNumber / 100 == 6) 
+                randomizedNumber -= UnityEngine.Random.Range(100, 200);
             lasersOnGlobally = true;
         }
         else Destroy(this.gameObject);
