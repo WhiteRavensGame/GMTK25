@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Databases")]
     [SerializeField] private GameObject[] characters;
+    [SerializeField] private GameObject[] characterStatues;
     [SerializeField] private LevelInfo[] levelInfos;
 
     [Header("Game balance")]
@@ -82,14 +83,14 @@ public class GameManager : MonoBehaviour
             return false;
         else if (!saveData[index].isUsed)
         {
-            Debug.Log($"{saveData[index].level}, {saveData[index].isUsed.ToString()}");
+            //Debug.Log($"{saveData[index].level}, {saveData[index].isUsed.ToString()}");
 
             return false;
         }
             
         else
         {   //save data exists in this index slot.
-            Debug.Log($"{saveData[index].level}, {saveData[index].characterType.ToString()}");
+            //Debug.Log($"{saveData[index].level}, {saveData[index].characterType.ToString()}");
                 return true;
         }
             
@@ -247,7 +248,9 @@ public class GameManager : MonoBehaviour
     {
         Transform startPos = GameObject.FindGameObjectWithTag("StartPos").transform;
         playerCharacter = Instantiate(characters[(int)playerCharacterType], startPos.position, Quaternion.identity);
-        
+
+        SpawnStatuesFromSaveFiles();
+
         gameState = GameState.Playing;
 
         OnLevelReload?.Invoke(this, EventArgs.Empty);
@@ -258,9 +261,28 @@ public class GameManager : MonoBehaviour
         playerCharacter = Instantiate(characters[(int)saveData[activeSaveIndex].characterType], 
             new Vector3(saveData[activeSaveIndex].savePosX, saveData[activeSaveIndex].savePosY, 0), Quaternion.identity);
 
+        SpawnStatuesFromSaveFiles();
+
         gameState = GameState.Playing;
 
         OnLevelReload?.Invoke(this, EventArgs.Empty);
+    }
+
+    private void SpawnStatuesFromSaveFiles()
+    {
+
+        foreach(SaveData saveFile in saveData)
+        {
+            Debug.Log("Check statue save file");
+            if(saveFile.isUsed)
+            {
+                Debug.Log("save exust");
+                if(saveFile.level == currentLevel)
+                {
+                    Instantiate(characterStatues[(int)saveFile.characterType], new Vector3(saveFile.savePosX, saveFile.savePosY, 0), Quaternion.identity);
+                }
+            }
+        }
     }
 
     public float GetTimeLeft()

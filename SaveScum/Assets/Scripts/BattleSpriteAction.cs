@@ -67,14 +67,26 @@ public class BattleSpriteAction : MonoBehaviour
 			float moveXVelMultiplier = 2;
             velocity.x = axis * moveXVelMultiplier;
         }
+		else //removes the horizontal movement when left/right released. 
+		{
+			//velocity.x = 0;
+			float frictionFactor = 3;
+			velocity.x = Mathf.Lerp(velocity.x, 0, Time.deltaTime * frictionFactor);
+        }
         rig2d.linearVelocity = velocity;
 
-        var distanceFromGround = Physics2D.Raycast (transform.position, Vector3.down, 1, groundMask);
+        var distanceFromGround = Physics2D.Raycast (transform.position, Vector2.down, 1, groundMask);
 
 		// update animator parameters
 		animator.SetBool (hashIsCrouch, isDown);
-		animator.SetFloat (hashGroundDistance, distanceFromGround.distance == 0 ? 99 : distanceFromGround.distance - characterHeightOffset);
-		animator.SetFloat (hashFallSpeed, rig2d.linearVelocity.y);
+
+		//in case the code after this doesn't work, use this instead. 
+        float groundDistance = distanceFromGround.collider != null ? distanceFromGround.distance - characterHeightOffset : 99f;
+        animator.SetFloat(hashGroundDistance, Mathf.Max(groundDistance, 0f));
+
+        //animator.SetFloat (hashGroundDistance, distanceFromGround.distance == 0 ? 99 : distanceFromGround.distance - characterHeightOffset);
+
+        animator.SetFloat (hashFallSpeed, rig2d.linearVelocity.y);
 		animator.SetFloat (hashSpeed, Mathf.Abs (axis));
 		if( Input.GetKeyDown(KeyCode.Z) ){  animator.SetTrigger(hashAttack1); }
 		if( Input.GetKeyDown(KeyCode.X) ){  animator.SetTrigger(hashAttack2); }
@@ -151,6 +163,15 @@ public class BattleSpriteAction : MonoBehaviour
 	private void TimeUp(object sender, System.EventArgs e)
 	{
 		KillPlayer();
+	}
+
+	public void PlayerTrippedExplosion()
+	{
+		KillPlayer();
+	}
+	public bool IsAlive()
+	{
+		return isAlive;
 	}
 
 }

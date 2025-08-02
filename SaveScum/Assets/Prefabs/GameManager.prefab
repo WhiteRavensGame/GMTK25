@@ -49,6 +49,10 @@ MonoBehaviour:
   - {fileID: 8004263168600205197, guid: c437cdff18d8ceb45b63c74e2b500f84, type: 3}
   - {fileID: 8848165349498617998, guid: 9b31cc99609b1fd4cb3671c0e9340a66, type: 3}
   - {fileID: 6733701356897026842, guid: 38ef2d17e3cec3d49989c3513823f445, type: 3}
+  characterStatues:
+  - {fileID: 8004263168600205197, guid: b43ce1b5ef6528d4f952a5c7c916156c, type: 3}
+  - {fileID: 8848165349498617998, guid: ee251ef9f637f094ea0a3a39a2d84744, type: 3}
+  - {fileID: 6733701356897026842, guid: fd94af89a50843043bc6d05aea23f036, type: 3}
   levelInfos:
   - {fileID: 11400000, guid: 9e5db4e701f2bf44c811cd629c8ae00f, type: 2}
   - {fileID: 11400000, guid: 3081ee4f3849a404bb5035fab76b0913, type: 2}

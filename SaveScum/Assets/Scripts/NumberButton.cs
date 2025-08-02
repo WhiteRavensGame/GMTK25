@@ -1,30 +1,23 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class LevelButton : MonoBehaviour
+public class NumberButton : LevelButton
 {
-    [SerializeField] protected SpriteRenderer spriteRenderer;
+    [SerializeField] private int number;
+    [SerializeField] private TextMeshProUGUI numberText;
+    [SerializeField] private Color incorrectPressColor;
 
-    [SerializeField] protected float pressOffset = -0.15f;
-    [SerializeField] protected float pressSpeed = 2f;
-    [SerializeField] protected Color pressColor = Color.green;
+    [SerializeField] private GameObject explosiveObject;
 
-    protected List<GameObject> pressers;
+    private bool incorrectPressed = false;
 
-    protected Color originalColor;
 
-    protected Vector3 unpressedPosition;
-    protected Vector3 pressedPosition;
-    protected bool isSteppedOn = false;
-
-    protected float triggerCooldown = 0.5f;
-    protected float lastTriggerTime = -1f;
-    
-    public bool IsButtonPressed()
-    {
-        return isSteppedOn;
-    }
+    //public bool IsButtonPressed()
+    //{
+    //    return isSteppedOn;
+    //}
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -33,6 +26,8 @@ public class LevelButton : MonoBehaviour
         unpressedPosition = transform.position;
         pressedPosition = unpressedPosition + new Vector3(0, pressOffset, 0);
         pressers = new List<GameObject>();
+
+        numberText.text = number.ToString();
     }
 
     // Update is called once per frame
@@ -41,7 +36,11 @@ public class LevelButton : MonoBehaviour
         Vector3 targetPos = isSteppedOn ? pressedPosition : unpressedPosition;
         transform.position = Vector3.Lerp(transform.position, targetPos, Time.deltaTime * pressSpeed);
 
-        if (isSteppedOn)
+        if (incorrectPressed)
+        {
+            spriteRenderer.color = incorrectPressColor;
+        }
+        else if (isSteppedOn)
         {
             spriteRenderer.color = pressColor;
         }
@@ -49,7 +48,7 @@ public class LevelButton : MonoBehaviour
         {
             spriteRenderer.color = originalColor;
         }
-        
+
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -57,11 +56,23 @@ public class LevelButton : MonoBehaviour
         //prevents double quick presses of the button. 
         if (Time.time - lastTriggerTime < triggerCooldown) return;
 
-        if(collision.gameObject.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Player"))
         {
+            if(collision.gameObject.TryGetComponent<BattleSpriteAction>(out BattleSpriteAction player))
+            {
+                if (!player.IsAlive())
+                    return;
+            }
+
             isSteppedOn = true;
-            if(!pressers.Contains(collision.gameObject))
+            if (!pressers.Contains(collision.gameObject))
+            {
                 pressers.Add(collision.gameObject);
+                
+                if(!NumberPuzzle.Instance.numberGameSolved)
+                    NumberPuzzle.Instance.EnterNumber(number, this);
+            }
+                
 
         }
     }
@@ -72,11 +83,19 @@ public class LevelButton : MonoBehaviour
         {
             if (pressers.Contains(collision.gameObject))
                 pressers.Remove(collision.gameObject);
-            
-            if(pressers.Count <= 0)
+
+            if (pressers.Count <= 0)
                 isSteppedOn = false;
-            
+
         }
+    }
+
+    public void SpawnExplosive()
+    {
+        incorrectPressed = true;
+
+        //RIP Unitychan.
+        Instantiate(explosiveObject, transform.position, Quaternion.identity);
     }
 
 }
