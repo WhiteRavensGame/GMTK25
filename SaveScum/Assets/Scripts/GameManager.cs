@@ -31,6 +31,8 @@ public class GameManager : MonoBehaviour
     private float loseTimer = 0;
     [SerializeField] private float maxLoseTimer = 2;
 
+    public int randomizedNumber;
+    private bool lasersOnGlobally;
 
     public event EventHandler OnTimeUp;
     public event EventHandler OnLevelReload;
@@ -44,13 +46,16 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(this.gameObject);
-            Debug.Log("AWAKER SHIT");
+            
 
             saveData = new SaveData[3];
             for (int i = 0; i < saveData.Length; i++)
             {
                 saveData[i] = new SaveData();
             }
+
+            randomizedNumber = UnityEngine.Random.Range(1234, 9876);
+            lasersOnGlobally = true;
         }
         else Destroy(this.gameObject);
     }
@@ -74,6 +79,15 @@ public class GameManager : MonoBehaviour
             SpawnNewPlayer();
         }
 
+    }
+
+    public bool GetLasersActive()
+    {
+        return lasersOnGlobally;
+    }
+    public void SetLasersActive(bool active)
+    {
+        lasersOnGlobally = active;
     }
 
     public bool HasSaveFileAtIndex(int index)

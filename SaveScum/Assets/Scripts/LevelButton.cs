@@ -60,6 +60,8 @@ public class LevelButton : MonoBehaviour
         if(collision.gameObject.CompareTag("Player"))
         {
             isSteppedOn = true;
+            Debug.Log("LASERS ON!");
+            GameManager.Instance.SetLasersActive(true);
             if(!pressers.Contains(collision.gameObject))
                 pressers.Add(collision.gameObject);
 
@@ -72,9 +74,14 @@ public class LevelButton : MonoBehaviour
         {
             if (pressers.Contains(collision.gameObject))
                 pressers.Remove(collision.gameObject);
-            
-            if(pressers.Count <= 0)
+
+            if (pressers.Count <= 0)
+            {
+                Debug.Log("LASERS OFF!");
+                GameManager.Instance.SetLasersActive(false);
                 isSteppedOn = false;
+            }
+                
             
         }
     }

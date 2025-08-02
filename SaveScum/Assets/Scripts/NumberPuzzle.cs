@@ -20,7 +20,7 @@ public class NumberPuzzle : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            randomizedNumber = UnityEngine.Random.Range(1234, 9876);
+            randomizedNumber = GameManager.Instance.randomizedNumber;
         }
         else Destroy(this.gameObject);
     }
