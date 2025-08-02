@@ -54,7 +54,7 @@ public class GameManager : MonoBehaviour
                 saveData[i] = new SaveData();
             }
 
-            randomizedNumber = UnityEngine.Random.Range(1234, 9876);
+            randomizedNumber = UnityEngine.Random.Range(456, 987);
             lasersOnGlobally = true;
         }
         else Destroy(this.gameObject);
@@ -278,6 +278,12 @@ public class GameManager : MonoBehaviour
         SpawnStatuesFromSaveFiles();
 
         gameState = GameState.Playing;
+
+        //if the player has unlocked number puzzle, just assign its combination. 
+        if(NumberPuzzle.Instance != null)
+        {
+            NumberPuzzle.Instance.SetCurrentEnteredNumber(saveData[activeSaveIndex].numberCombinationProgress);
+        }
 
         OnLevelReload?.Invoke(this, EventArgs.Empty);
     }

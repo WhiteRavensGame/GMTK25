@@ -7,7 +7,7 @@ public class NumberPuzzle : MonoBehaviour
     public static NumberPuzzle Instance;
 
     public int numbersEntered = 0;
-    private int currentDigit = 1000;
+    private int currentDigit = 100;
     private int randomizedNumber = -1;
 
     public bool numberGameSolved = false;
@@ -34,7 +34,7 @@ public class NumberPuzzle : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        numbersEnteredText.text = numbersEntered.ToString("0000");
+        numbersEnteredText.text = numbersEntered.ToString("000");
     }
 
     public void EnterNumber(int number, NumberButton numButton)
@@ -95,5 +95,33 @@ public class NumberPuzzle : MonoBehaviour
         
 
         Debug.Log("Randomized number: " + randomizedNumber);
+    }
+
+    public int GetCurrentEnteredNumber()
+    {
+        return numbersEntered;
+    }
+
+    public void SetCurrentEnteredNumber(int number)
+    {
+        //assumes number will never be below 100.
+        numbersEntered = number;
+        if(number == 0)
+        {
+            currentDigit = 100;
+        }
+        else if(numbersEntered / 10 == 0 && numbersEntered % 10 == 0)
+        {
+            currentDigit = 100;
+        }
+        else if (numbersEntered / 10 == 0 && numbersEntered % 10 != 0) //one digit entered
+        {
+            currentDigit = 10;
+        }
+        else if (numbersEntered / 10 != 0) //two or more digits entered
+        {
+            currentDigit = 1;
+        }
+
     }
 }

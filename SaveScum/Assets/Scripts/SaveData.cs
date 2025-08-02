@@ -11,6 +11,8 @@ public class SaveData
 
     public bool isUsed;
 
+    public int numberCombinationProgress;
+
     public SaveData()
     {
         level = 0;
@@ -29,5 +31,8 @@ public class SaveData
         this.savePosY = savePosY;
 
         isUsed = true;
+
+        if(NumberPuzzle.Instance != null)
+            numberCombinationProgress = NumberPuzzle.Instance.GetCurrentEnteredNumber();
     }
 }
