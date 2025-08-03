@@ -34,8 +34,11 @@ public class BattleSpriteAction : MonoBehaviour
     private bool canJump = true;
 	private bool isAlive = true;
 
+	[SerializeField] private GameObject leftMeleeHitbox;
+    [SerializeField] private GameObject rightMeleeHitbox;
 
-	void Awake ()
+
+    void Awake ()
 	{
 		animator = GetComponent<Animator> ();
 		spriteRenderer = GetComponent<SpriteRenderer> ();
@@ -45,6 +48,8 @@ public class BattleSpriteAction : MonoBehaviour
     void Start()
     {
 		GameManager.Instance.OnTimeUp += TimeUp;
+		leftMeleeHitbox.SetActive(false);
+		rightMeleeHitbox.SetActive(false);
     }
 
     void Update ()
@@ -89,9 +94,9 @@ public class BattleSpriteAction : MonoBehaviour
 
         animator.SetFloat (hashFallSpeed, rig2d.linearVelocity.y);
 		animator.SetFloat (hashSpeed, Mathf.Abs (axis));
-		if( Input.GetKeyDown(KeyCode.Z) ){  animator.SetTrigger(hashAttack1); }
-		if( Input.GetKeyDown(KeyCode.X) ){  animator.SetTrigger(hashAttack2); }
-		if( Input.GetKeyDown(KeyCode.C) ){  animator.SetTrigger(hashAttack3); }
+		//if( Input.GetKeyDown(KeyCode.Z) ){  animator.SetTrigger(hashAttack3); }
+		if( Input.GetKeyDown(KeyCode.X) ){  animator.SetTrigger(hashAttack3); }
+		//if( Input.GetKeyDown(KeyCode.C) ){  animator.SetTrigger(hashAttack3); }
 
 		//// flip sprite
 		//if (axis != 0)
@@ -182,5 +187,26 @@ public class BattleSpriteAction : MonoBehaviour
 	{
 		return isAlive;
 	}
+
+	public void SpawnMeleeHitbox()
+	{
+		if(spriteRenderer.flipX)
+		{
+			//facing left
+			leftMeleeHitbox.SetActive(true);
+            rightMeleeHitbox.SetActive(false);
+        }
+		else
+		{
+            rightMeleeHitbox.SetActive(true);
+            leftMeleeHitbox.SetActive(false);
+        }
+	}
+
+	public void HideeMeleeHitbox()
+	{
+        rightMeleeHitbox.SetActive(false);
+        leftMeleeHitbox.SetActive(false);
+    }
 
 }

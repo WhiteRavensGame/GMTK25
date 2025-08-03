@@ -303,4 +303,9 @@ public class MinibossScripted : MonoBehaviour
         animator.SetTrigger(hashDamage);
     }
 
+    public void HitBySecretMelee()
+    {
+        HurtPlayer();
+    }
+
 }

@@ -345,7 +345,6 @@ public class FinalBossPattern : MonoBehaviour
         {
             if (bossState == BossState.IDLE)
             {
-                Console.WriteLine("Player hit by Miniboss. Go flying.");
                 animator.SetTrigger(hashAttack2);
                 //Fun physics
                 if (collider.gameObject.TryGetComponent<Rigidbody2D>(out Rigidbody2D rb))
@@ -366,8 +365,13 @@ public class FinalBossPattern : MonoBehaviour
         {
             HurtPlayer(1);
             animator.speed = 1;
-            Console.WriteLine("Boss hit by projectile.");
             Destroy(collider.gameObject);
+        }
+        else if(collider.gameObject.CompareTag("MeleeHitBox"))
+        {
+            Debug.Log("Hit by melee");
+            HurtPlayer(2);
+            animator.speed = 1;
         }
     }
     public void SendTargetFlyingUp()
@@ -426,6 +430,11 @@ public class FinalBossPattern : MonoBehaviour
         animator.SetTrigger(hashDamage);
         StopAllCoroutines();
         goal.SetActive(true);
+    }
+
+    public void HitBySecretMelee()
+    {
+        HurtPlayer(2);
     }
 
 }

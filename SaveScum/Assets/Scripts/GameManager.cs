@@ -1,6 +1,4 @@
 using System;
-using Unity.VisualScripting;
-using UnityEditor.Toolbars;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -12,6 +10,8 @@ public class GameManager : MonoBehaviour
     [Header("Data management")]
     [SerializeField] private SaveData[] saveData;
     private int activeSaveIndex;
+    private float loadCooldown = 1f;
+    private float loadTimer = 0f;
 
     [Header("Databases")]
     [SerializeField] private GameObject[] characters;
@@ -175,49 +175,61 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        if (loadTimer > 0)
+            loadTimer -= Time.deltaTime;
+
         //save spots
         //Don't save when game over.
         if (gameState == GameState.Playing)
         {
-            if (Input.GetKeyDown(KeyCode.Alpha1))
+            if ( Input.GetKeyDown(KeyCode.E) && currentLevel < 8 && currentLevel > 0 )
             {
                 //saveData[0] = new SaveData(currentLevel, playerCharacterType, playerCharacter.transform.position.x, playerCharacter.transform.position.y);
                 //activeSaveData = saveData[0];
                 saveData[activeSaveIndex] = new SaveData(currentLevel, playerCharacterType, playerCharacter.transform.position.x, playerCharacter.transform.position.y);
                 UIManager.Instance.SaveAtSlot(activeSaveIndex, saveData[activeSaveIndex]);
             }
-            else if (Input.GetKeyDown(KeyCode.Alpha2))
-            {
-                //saveData[1] = new SaveData(currentLevel, playerCharacterType, playerCharacter.transform.position.x, playerCharacter.transform.position.y);
-                //activeSaveData = saveData[1];
-                saveData[activeSaveIndex] = new SaveData(currentLevel, playerCharacterType, playerCharacter.transform.position.x, playerCharacter.transform.position.y);
-                UIManager.Instance.SaveAtSlot(activeSaveIndex, saveData[activeSaveIndex]);
-            }
-            else if (Input.GetKeyDown(KeyCode.Alpha3))
-            {
-                //saveData[2] = new SaveData(currentLevel, playerCharacterType, playerCharacter.transform.position.x, playerCharacter.transform.position.y);
-                //activeSaveData = saveData[2];
-                saveData[activeSaveIndex] = new SaveData(currentLevel, playerCharacterType, playerCharacter.transform.position.x, playerCharacter.transform.position.y);
-                UIManager.Instance.SaveAtSlot(activeSaveIndex, saveData[activeSaveIndex]);
-            }
+            //else if (Input.GetKeyDown(KeyCode.Alpha2))
+            //{
+            //    //saveData[1] = new SaveData(currentLevel, playerCharacterType, playerCharacter.transform.position.x, playerCharacter.transform.position.y);
+            //    //activeSaveData = saveData[1];
+            //    saveData[activeSaveIndex] = new SaveData(currentLevel, playerCharacterType, playerCharacter.transform.position.x, playerCharacter.transform.position.y);
+            //    UIManager.Instance.SaveAtSlot(activeSaveIndex, saveData[activeSaveIndex]);
+            //}
+            //else if (Input.GetKeyDown(KeyCode.Alpha3))
+            //{
+            //    //saveData[2] = new SaveData(currentLevel, playerCharacterType, playerCharacter.transform.position.x, playerCharacter.transform.position.y);
+            //    //activeSaveData = saveData[2];
+            //    saveData[activeSaveIndex] = new SaveData(currentLevel, playerCharacterType, playerCharacter.transform.position.x, playerCharacter.transform.position.y);
+            //    UIManager.Instance.SaveAtSlot(activeSaveIndex, saveData[activeSaveIndex]);
+            //}
 
         }
 
         //player can load during playing or when they lost. 
-        if (gameState == GameState.Playing || gameState == GameState.Lose)
+        if ( (gameState == GameState.Playing || gameState == GameState.Lose) && currentLevel < 8 )
         {
-            if (Input.GetKeyDown(KeyCode.F1))
+            //don't spam load, or game breaks.
+            if(loadTimer <= 0)
             {
-                ReloadSave(0);
+                if (Input.GetKeyDown(KeyCode.Alpha1))
+                {
+                    ReloadSave(0);
+                    loadTimer = loadCooldown;
+                }
+                else if (Input.GetKeyDown(KeyCode.Alpha2))
+                {
+                    ReloadSave(1);
+                    loadTimer = loadCooldown;
+                }
+                else if (Input.GetKeyDown(KeyCode.Alpha3))
+                {
+                    ReloadSave(2);
+                    loadTimer = loadCooldown;
+                }
             }
-            else if (Input.GetKeyDown(KeyCode.F2))
-            {
-                ReloadSave(1);
-            }
-            else if (Input.GetKeyDown(KeyCode.F3))
-            {
-                ReloadSave(2);
-            }
+            
         }
         
 
@@ -258,11 +270,16 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log($"ERROR. NO SAVE FOUND AT INDEX {index}");
         }
+        else if (saveData[index].level <= 0)
+        {
+            //if save data haven't been made yet, don't load it (it will break).
+        }
         else
         {
-            currentLevel = saveData[activeSaveIndex].level;
+            currentLevel = saveData[index].level;
+            SetActiveSaveSlot(index);
             
-            SceneManager.LoadScene(saveData[activeSaveIndex].level);
+            SceneManager.LoadScene(saveData[index].level);
             //OnReloadSaveFile?.Invoke(this, activeSaveData);
             
             //QQQQ
@@ -310,6 +327,14 @@ public class GameManager : MonoBehaviour
 
         foreach(SaveData saveFile in saveData)
         {
+            //UNCOMMENT THIS PART IF DEBUGGING:
+            if (saveFile == saveData[activeSaveIndex])
+            {
+                Debug.Log("Save file found at " + activeSaveIndex + ". Skippin");
+                continue;
+            }
+                
+
             Debug.Log("Check statue save file");
             if(saveFile.isUsed)
             {
@@ -336,9 +361,23 @@ public class GameManager : MonoBehaviour
     public void LoadNextLevel()
     {
         currentLevel++;
+        
         UIManager.Instance.ShowLoadTransition();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-        Invoke("RespawnCharacterHardReset", 0.15f);
+
+        Debug.Log(SceneManager.GetActiveScene().buildIndex);
+
+        //QQQQ. Just hide it when reaching final boss and end credits. 
+        if (currentLevel >= 8)
+            UIManager.Instance.DisplaySealedPlasterObject(true);
+        else
+            UIManager.Instance.DisplaySealedPlasterObject(false);
+
+        //QQQQ check if it's the end screen 
+        if (currentLevel >= 9)
+            UIManager.Instance.ShowGameFinishedScreen();
+
+            Invoke("RespawnCharacterHardReset", 0.15f);
         ResetTimer();
     }
 

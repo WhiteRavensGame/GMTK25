@@ -224,6 +224,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8698213215959746250, guid: 3500c424ff1613e4eb6b5838362f2d16, type: 3}
+      propertyPath: m_text
+      value: Slot 2
+      objectReference: {fileID: 0}
     - target: {fileID: 8820203969164797551, guid: 3500c424ff1613e4eb6b5838362f2d16, type: 3}
       propertyPath: saveSlotNumber
       value: 2
@@ -801,6 +805,10 @@ PrefabInstance:
     - target: {fileID: 3016349168259845754, guid: 3500c424ff1613e4eb6b5838362f2d16, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8698213215959746250, guid: 3500c424ff1613e4eb6b5838362f2d16, type: 3}
+      propertyPath: m_text
+      value: Slot 1
       objectReference: {fileID: 0}
     - target: {fileID: 8820203969164797551, guid: 3500c424ff1613e4eb6b5838362f2d16, type: 3}
       propertyPath: saveSlotNumber
@@ -9660,6 +9668,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1095541066363554115, guid: 89589299abbd5ba4ab1775cb96924c60, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1158026007158597762, guid: 89589299abbd5ba4ab1775cb96924c60, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -9678,6 +9690,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1158026007158597762, guid: 89589299abbd5ba4ab1775cb96924c60, type: 3}
       propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1158026007158597762, guid: 89589299abbd5ba4ab1775cb96924c60, type: 3}
+      propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1412637207801144210, guid: 89589299abbd5ba4ab1775cb96924c60, type: 3}
@@ -9772,10 +9788,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canvas_UI
       objectReference: {fileID: 0}
-    - target: {fileID: 8016402149260755948, guid: 89589299abbd5ba4ab1775cb96924c60, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 8106874727824869729, guid: 89589299abbd5ba4ab1775cb96924c60, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -9794,6 +9806,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8106874727824869729, guid: 89589299abbd5ba4ab1775cb96924c60, type: 3}
       propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8106874727824869729, guid: 89589299abbd5ba4ab1775cb96924c60, type: 3}
+      propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

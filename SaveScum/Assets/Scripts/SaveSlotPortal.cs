@@ -23,13 +23,13 @@ public class SaveSlotPortal : MonoBehaviour
             Debug.Log($"Slot {saveSlotNumber} has a save file");
             isLocked = true;
             //boxCollider.enabled = false;
-            spriteRenderer.enabled = false;
+            //spriteRenderer.enabled = false;
         }
         else
         {
             Debug.Log($"Slot {saveSlotNumber} has NO save file");
             isLocked = false;
-            portalText.text = "Slot" + saveSlotNumber;
+            //portalText.text = "Slot" + saveSlotNumber;
         }
     }
 

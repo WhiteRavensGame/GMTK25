@@ -10,6 +10,7 @@ TagManager:
   - Miniboss
   - Statue
   - Projectiles
+  - MeleeHitBox
   layers:
   - Default
   - TransparentFX

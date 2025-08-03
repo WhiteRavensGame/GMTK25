@@ -10,6 +10,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject levelFailedPanel;
     [SerializeField] private GameObject gameFinishedPanel;
     [SerializeField] private GameObject saveSlotsPanel;
+    [SerializeField] private GameObject sealedPlasterObject;
     [SerializeField] private UISaveSlot[] saveSlots;
 
     [Header("Buttons for Events")]
@@ -89,5 +90,10 @@ public class UIManager : MonoBehaviour
     {
         gameFinishedPanel.SetActive(true);
         saveSlotsPanel.SetActive(false);
+    }
+
+    public void DisplaySealedPlasterObject(bool show)
+    {
+        sealedPlasterObject.SetActive(show);
     }
 }
