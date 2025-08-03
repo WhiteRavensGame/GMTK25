@@ -37,6 +37,9 @@ public class SaveSlotPortal : MonoBehaviour
         if (entered)
             return;
 
+        if (!collision.gameObject.CompareTag("Player"))
+            return;
+
         entered = true;
 
         if (!isLocked)
