@@ -37,6 +37,12 @@ public class BattleSpriteAction : MonoBehaviour
 	[SerializeField] private GameObject leftMeleeHitbox;
     [SerializeField] private GameObject rightMeleeHitbox;
 
+	[Header("Audio")]
+	[SerializeField] private AudioClip[] jumpAudio;
+    [SerializeField] private AudioClip[] hurtAudio;
+    [SerializeField] private AudioClip[] deathAudio;
+    [SerializeField] private AudioClip[] winAudio;
+
 
     void Awake ()
 	{
@@ -66,6 +72,7 @@ public class BattleSpriteAction : MonoBehaviour
         {
             velocity.y = 5;
             canJump = false;
+			AudioManager.Instance.PlaySFX(jumpAudio);
         }
         if (axis != 0)
         {
@@ -154,7 +161,13 @@ public class BattleSpriteAction : MonoBehaviour
 		if(hp <= 0)
 		{
 			KillPlayer();
+			AudioManager.Instance.PlaySFX(deathAudio);
 		}
+		else
+		{
+            AudioManager.Instance.PlaySFX(hurtAudio);
+        }
+
 
         animator.SetTrigger(hashDamage);
     }
@@ -211,5 +224,11 @@ public class BattleSpriteAction : MonoBehaviour
         rightMeleeHitbox.SetActive(false);
         leftMeleeHitbox.SetActive(false);
     }
+
+	public void PlayVictoryFanfare()
+	{
+		AudioManager.Instance.PlaySFX(winAudio);
+		
+	}
 
 }

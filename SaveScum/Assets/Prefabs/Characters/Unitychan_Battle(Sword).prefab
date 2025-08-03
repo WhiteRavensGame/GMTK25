@@ -516,3 +516,16 @@ MonoBehaviour:
   hp: 5
   leftMeleeHitbox: {fileID: 6529454503182266506}
   rightMeleeHitbox: {fileID: 7251358678033865796}
+  jumpAudio:
+  - {fileID: 8300000, guid: f42335fdb170c174cac6eb3102faf41d, type: 3}
+  - {fileID: 8300000, guid: 7d6362ca4785145409ff4b82ecc0c420, type: 3}
+  hurtAudio:
+  - {fileID: 8300000, guid: dc61e3eed32456a49959dc96aae7de61, type: 3}
+  - {fileID: 8300000, guid: d75d61656f06a184dbcefeeca9cd717a, type: 3}
+  deathAudio:
+  - {fileID: 8300000, guid: 776f118e15006764cbbdee9f5e654653, type: 3}
+  - {fileID: 8300000, guid: 3fe5d9930e1aafa42b4704f87d74d27c, type: 3}
+  winAudio:
+  - {fileID: 8300000, guid: d4a9f9ae6b8f35f4080165b128831e62, type: 3}
+  - {fileID: 8300000, guid: 8b38660e6f853dd4da3852e282d1f7b4, type: 3}
+  - {fileID: 8300000, guid: 518b1f78783096c46927ba7f64262bea, type: 3}

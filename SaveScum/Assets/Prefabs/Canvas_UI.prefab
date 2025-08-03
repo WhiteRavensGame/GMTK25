@@ -1561,7 +1561,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Save: E    Reloop: R'
+  m_text: 'Save: E    Reloop: 1/2/3'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cf657bd4219bbd04bb4d88a752af2f7e, type: 2}
   m_sharedMaterial: {fileID: 7433428953821960143, guid: cf657bd4219bbd04bb4d88a752af2f7e, type: 2}
@@ -2057,7 +2057,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 70}
-  m_SizeDelta: {x: 1024, y: 670}
+  m_SizeDelta: {x: 1024, y: 705.93}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2971219666975404888
 CanvasRenderer:
@@ -4714,7 +4714,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -6, y: -344.9}
+  m_AnchoredPosition: {x: -6, y: -373}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &273011221060007286
@@ -4745,9 +4745,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Press R to Quick Reloop
-
-    Press F1/F2/F3 to load 1st/2nd/3rd slot'
+  m_text: "Press R to Quick Reloop\nPress 1/2/3 to load 1st/2nd/3rd slot \nanytime
+    in game"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cf657bd4219bbd04bb4d88a752af2f7e, type: 2}
   m_sharedMaterial: {fileID: 7433428953821960143, guid: cf657bd4219bbd04bb4d88a752af2f7e, type: 2}
