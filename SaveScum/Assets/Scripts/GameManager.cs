@@ -56,8 +56,8 @@ public class GameManager : MonoBehaviour
             }
 
             randomizedNumber = UnityEngine.Random.Range(123, 987);
-            //prevents the hundredths place to be 6 because of the loophole 69420. 
-            if (randomizedNumber / 100 == 6) 
+            //prevents the hundredths place to be 4 because of the loophole 420. 
+            if (randomizedNumber / 100 == 4) 
                 randomizedNumber -= UnityEngine.Random.Range(100, 200);
             lasersOnGlobally = true;
             electricityOnGlobally = false;

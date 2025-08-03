@@ -3,6 +3,7 @@ using System.Collections;
 using System;
 using Unity.VisualScripting;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class FinalBossPattern : MonoBehaviour
 {
@@ -28,9 +29,16 @@ public class FinalBossPattern : MonoBehaviour
     [SerializeField, HideInInspector] Rigidbody2D rig2d;
 
     [SerializeField] public PlayerCharacter characterType;
+    [SerializeField] private GameObject goal;
 
     public int hp = 6;
     public int maxHP = 6;
+
+    [SerializeField] private Image healthBarBG;
+    [SerializeField] private Image healthBar;
+
+    private float iFrameTimer = 0;
+    private float iFrameDuration = 1.5f;
 
     private bool canJump = true;
     private bool isAlive = true;
@@ -48,6 +56,8 @@ public class FinalBossPattern : MonoBehaviour
     private List<GameObject> projectiles;
 
 
+
+
     public enum BossState
     {
         IDLE,
@@ -55,7 +65,7 @@ public class FinalBossPattern : MonoBehaviour
         FIRING, // fire attacks simultaneously
         RELOADING, 
         PLAYER_DEFEATED,
-        DEAD //fried by laser
+        DEAD 
     }
 
 
@@ -83,6 +93,8 @@ public class FinalBossPattern : MonoBehaviour
         playerTarget = g.GetComponent<BattleSpriteAction>();
         Debug.Log(g.name);
         StartCoroutine(ProcessAttackPattern());
+        healthBarBG.gameObject.SetActive(true);
+        healthBar.gameObject.SetActive(true);
     }
 
     Bounds GetCameraBounds()
@@ -247,6 +259,9 @@ public class FinalBossPattern : MonoBehaviour
         
         BossProjectiles.speedModifier = overallSpeed;
 
+        //update iFrames if any
+        if (iFrameTimer > 0)
+            iFrameTimer -= Time.deltaTime;
 
         //if (bossState == BossState.APPROACH_SAVESTATUE)
         //{
@@ -300,7 +315,7 @@ public class FinalBossPattern : MonoBehaviour
         animator.SetFloat(hashFallSpeed, rig2d.linearVelocity.y);
         //animator.SetFloat(hashSpeed, Mathf.Abs(axis));
         //if (Input.GetKeyDown(KeyCode.Z)) { animator.SetTrigger(hashAttack1); }
-        if (Input.GetKeyDown(KeyCode.X)) { animator.SetTrigger(hashAttack1); }
+        //if (Input.GetKeyDown(KeyCode.X)) { animator.SetTrigger(hashAttack1); }
         //if (Input.GetKeyDown(KeyCode.C)) { animator.SetTrigger(hashAttack3); }
 
         //// flip sprite
@@ -313,7 +328,7 @@ public class FinalBossPattern : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Player") && isAlive)
         {
             //kill player upon touch
             if (collision.gameObject.TryGetComponent<BattleSpriteAction>(out BattleSpriteAction player))
@@ -326,7 +341,7 @@ public class FinalBossPattern : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
-        if (collider.gameObject.CompareTag("Player"))
+        if (collider.gameObject.CompareTag("Player") && isAlive)
         {
             if (bossState == BossState.IDLE)
             {
@@ -381,13 +396,20 @@ public class FinalBossPattern : MonoBehaviour
 
     private void HurtPlayer(int damage = 999)
     {
+        if (iFrameTimer > 0)
+            return;
+
         hp -= damage;
+        healthBar.fillAmount = (float)hp / (float)maxHP;
+
         if (hp <= 0)
         {
             KillPlayer();
         }
 
         animator.SetTrigger(hashDamage);
+        iFrameTimer = iFrameDuration;
+        
     }
 
     private void KillPlayer()
@@ -396,11 +418,14 @@ public class FinalBossPattern : MonoBehaviour
             return;
 
         hp = 0;
+        healthBarBG.gameObject.SetActive(false);
+        healthBar.gameObject.SetActive(false);
         animator.SetBool(hashIsDead, true);
         isAlive = false;
         OnPlayerDeath?.Invoke(this, EventArgs.Empty);
         animator.SetTrigger(hashDamage);
         StopAllCoroutines();
+        goal.SetActive(true);
     }
 
 }

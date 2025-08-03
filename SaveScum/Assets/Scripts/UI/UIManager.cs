@@ -8,12 +8,15 @@ public class UIManager : MonoBehaviour
 
     [SerializeField] private GameObject levelClearPanel;
     [SerializeField] private GameObject levelFailedPanel;
+    [SerializeField] private GameObject gameFinishedPanel;
+    [SerializeField] private GameObject saveSlotsPanel;
     [SerializeField] private UISaveSlot[] saveSlots;
 
     [Header("Buttons for Events")]
     [SerializeField] private Button hardResetLevelButton;
     [SerializeField] private Button nextLevelButton;
     [SerializeField] private Button backToMainMenuButton;
+    [SerializeField] private Button quitGameButton;
 
     [Header("Sprites")]
     [SerializeField]
@@ -46,6 +49,10 @@ public class UIManager : MonoBehaviour
         {
             GameManager.Instance.BeginReturnToMainMenu();
         });
+        quitGameButton.onClick.AddListener(() =>
+        {
+            Application.Quit();
+        });
 
         GameManager.Instance.OnLevelReload += GameManager_OnLevelReload;
         levelClearPanel.SetActive(false);
@@ -76,5 +83,11 @@ public class UIManager : MonoBehaviour
     public void ShowLoadTransition()
     {
         transitionPanelAnimator.SetTrigger("FadeBlack");
+    }
+
+    public void ShowGameFinishedScreen()
+    {
+        gameFinishedPanel.SetActive(true);
+        saveSlotsPanel.SetActive(false);
     }
 }

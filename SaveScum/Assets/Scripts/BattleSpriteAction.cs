@@ -136,6 +136,7 @@ public class BattleSpriteAction : MonoBehaviour
         {
             HurtPlayer(1);
             Console.WriteLine("Player hit by projectile.");
+			Destroy(collider.gameObject);
         }
     }
 

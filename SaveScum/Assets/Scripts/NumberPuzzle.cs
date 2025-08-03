@@ -48,9 +48,9 @@ public class NumberPuzzle : MonoBehaviour
         Debug.Log($"{numbersEntered} vs { randomizedNumber / currentDigit}");
         if (numbersEntered != randomizedNumber / currentDigit)
         {
-            if (numbersEntered == 6 || numbersEntered == 69 || numbersEntered == 694 || numbersEntered == 6942 || numbersEntered == 69420)
+            if (numbersEntered == 4 || numbersEntered == 42 || numbersEntered == 420)
             {
-                if(numbersEntered == 69420)
+                if(numbersEntered == 420)
                 {
                     Debug.Log("WIN. Loophole found");
                     WinNumberGame();
