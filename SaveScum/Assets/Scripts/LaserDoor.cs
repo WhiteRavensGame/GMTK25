@@ -8,6 +8,8 @@ public class LaserDoor : MonoBehaviour
     [SerializeField] private BoxCollider2D deathCollider;
 
     private bool IsOn;
+    private float timerAnim;
+    private float timerTransition = 0.16f;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -36,6 +38,18 @@ public class LaserDoor : MonoBehaviour
         IsOn = unlocked;
         spriteRenderer.enabled = !unlocked;
         deathCollider.enabled = !unlocked;
+
+        //electricity animation
+        if(deathCollider.enabled)
+        {
+            timerAnim -= Time.deltaTime;
+            if(timerAnim <= 0)
+            {
+                transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
+                timerAnim = timerTransition;
+            }
+           
+        }
 
     }
 }
