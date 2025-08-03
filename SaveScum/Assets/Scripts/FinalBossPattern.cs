@@ -52,10 +52,16 @@ public class FinalBossPattern : MonoBehaviour
     private Vector3 startPos;
     float overallSpeed = 1;
 
+    [SerializeField] public AudioClip[] jumpAudio;
+    [SerializeField] public AudioClip[] hurtAudio;
+    [SerializeField] public AudioClip[] deathAudio;
+    [SerializeField] public AudioClip[] winAudio;
+    [SerializeField] public AudioClip[] attackAudio;
+
+    [SerializeField] public AudioClip gunfireAudio;
+
     [SerializeField] private List<GameObject> spawnableProjectiles;
     private List<GameObject> projectiles;
-
-
 
 
     public enum BossState
@@ -194,10 +200,12 @@ public class FinalBossPattern : MonoBehaviour
             bossState = BossState.CHARGING; //show all directions of where the attack can come from.
             animator.speed = overallSpeed;
             animator.SetTrigger(hashAttack1);
+            AudioManager.Instance.PlaySFX(attackAudio);
         }
 
         //Player Died. Do taunt.
         Debug.Log("BOSS TAUNT");
+        AudioManager.Instance.PlaySFX(winAudio);
         
        // yield return new WaitForSeconds(1f/overallSpeed);
        //// bossState = BossState.HIT_SAVESTATUE;
@@ -374,8 +382,15 @@ public class FinalBossPattern : MonoBehaviour
             animator.speed = 1;
         }
     }
+
+    public void PlayGunshotAudio()
+    {
+        AudioManager.Instance.PlaySFX(gunfireAudio);
+    }
+
     public void SendTargetFlyingUp()
     {
+        
 
         float explosionForce = 10;
         float explosionRadius = 3f;
@@ -410,6 +425,10 @@ public class FinalBossPattern : MonoBehaviour
         {
             KillPlayer();
         }
+        else
+        {
+            AudioManager.Instance.PlaySFX(hurtAudio);
+        }
 
         animator.SetTrigger(hashDamage);
         iFrameTimer = iFrameDuration;
@@ -420,6 +439,8 @@ public class FinalBossPattern : MonoBehaviour
     {
         if (!isAlive)
             return;
+
+        AudioManager.Instance.PlaySFX(deathAudio);
 
         hp = 0;
         healthBarBG.gameObject.SetActive(false);

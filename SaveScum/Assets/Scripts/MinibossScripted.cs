@@ -41,6 +41,11 @@ public class MinibossScripted : MonoBehaviour
     public MinibossState bossState = MinibossState.IDLE;
     private Vector3 startPos;
 
+    [SerializeField] public AudioClip[] hurtAudio;
+    [SerializeField] public AudioClip[] deathAudio;
+    [SerializeField] public AudioClip[] winAudio;
+    [SerializeField] public AudioClip[] attackAudio;
+
     public enum MinibossState
     {
         IDLE,
@@ -258,7 +263,9 @@ public class MinibossScripted : MonoBehaviour
     }
     public void SendTargetFlyingUp()
     {
-       
+
+        AudioManager.Instance.PlaySFX(attackAudio);
+
         float explosionForce = 10;
         float explosionRadius = 3f;
         float upwardsModifier = 3f;
@@ -287,6 +294,10 @@ public class MinibossScripted : MonoBehaviour
         {
             KillPlayer();
         }
+        else
+        {
+            AudioManager.Instance.PlaySFX(hurtAudio);
+        }
 
         animator.SetTrigger(hashDamage);
     }
@@ -295,6 +306,8 @@ public class MinibossScripted : MonoBehaviour
     {
         if (!isAlive)
             return;
+
+        AudioManager.Instance.PlaySFX(deathAudio);
 
         hp = 0;
         animator.SetBool(hashIsDead, true);

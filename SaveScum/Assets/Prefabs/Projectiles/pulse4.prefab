@@ -125,6 +125,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d764eb2e1fd675b4d8c8a95d3e2115bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speed: 5
+  isScriptedProjectile: 0
+  hitSounds: []
+  hitParticle: {fileID: 4835972717139389642, guid: ca995914c9eca394285cec3b82506105, type: 3}
 --- !u!61 &5996836034337632778
 BoxCollider2D:
   m_ObjectHideFlags: 0

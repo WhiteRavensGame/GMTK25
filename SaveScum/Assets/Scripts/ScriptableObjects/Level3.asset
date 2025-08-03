@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Level3
   m_EditorClassIdentifier: 
   level: 3
-  timeLimit: 8
+  timeLimit: 7
   levelName: Intended Route

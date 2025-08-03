@@ -10699,6 +10699,29 @@ MonoBehaviour:
   healthBar: {fileID: 1415222791}
   slamParticle: {fileID: 0}
   bossState: 0
+  jumpAudio:
+  - {fileID: 8300000, guid: c0b312292ee5ccc4bab2886bfc8b60e3, type: 3}
+  - {fileID: 8300000, guid: e129fe52edb164b498a1ccc4b4ce1e4c, type: 3}
+  hurtAudio:
+  - {fileID: 8300000, guid: bf0c17bc89fd5f445aee7304787672ce, type: 3}
+  - {fileID: 8300000, guid: 16cf40572417fff449848f0a879d683a, type: 3}
+  - {fileID: 8300000, guid: 001b0fb9eafa8f64a8b9bc92c392a2f0, type: 3}
+  deathAudio:
+  - {fileID: 8300000, guid: 9a78b91d87a341b469d70a0e3a30abd3, type: 3}
+  winAudio:
+  - {fileID: 8300000, guid: 2fb0a19bac81f4849b49648ec0aa69e6, type: 3}
+  - {fileID: 8300000, guid: 3a62d3bc75751c24f84f11bb0b66e538, type: 3}
+  - {fileID: 8300000, guid: d04a3a1a122ebb14fa81bcd3fa435ebd, type: 3}
+  - {fileID: 8300000, guid: 62946e60e758acb49afc4c9084a6fbad, type: 3}
+  attackAudio:
+  - {fileID: 8300000, guid: 1b62b6dbce081a84b9560d7000d1beba, type: 3}
+  - {fileID: 8300000, guid: 1f2e436656f54814582c390b58965390, type: 3}
+  - {fileID: 8300000, guid: 0d480a00a15ece34da2f63f465713e09, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  gunfireAudio: {fileID: 8300000, guid: d29688413f91f9640beded79f0609a59, type: 3}
   spawnableProjectiles:
   - {fileID: 4160392176157552573, guid: 7241f3e95184e094cbf09268127ee7f5, type: 3}
   - {fileID: 7517922778726005233, guid: 4ab73288a86981542920543c40a8d378, type: 3}

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6434316693259521193}
   - component: {fileID: 2239734537280129666}
   - component: {fileID: 7948390497453928111}
+  - component: {fileID: 2734218911906617463}
   m_Layer: 0
   m_Name: VFX_TwoColorExplosion
   m_TagString: Untagged
@@ -110,3 +111,15 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &2734218911906617463
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8028610031123987916}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c09b4657cef2454f8e89c5bea8c9048, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

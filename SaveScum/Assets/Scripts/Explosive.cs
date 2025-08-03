@@ -7,6 +7,8 @@ public class Explosive : MonoBehaviour
     private float explosionRadius = 3f;
     private float upwardsModifier = 1.5f;
 
+    public GameObject explosionObject;
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
@@ -18,6 +20,8 @@ public class Explosive : MonoBehaviour
                     return;
 
                 player.PlayerTrippedExplosion();
+                Vector2 hitPoint = (transform.position + player.transform.position) / 2f;
+                Instantiate(explosionObject, hitPoint, Quaternion.identity);
             }
 
             //Fun physics

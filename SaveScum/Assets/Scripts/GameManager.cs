@@ -7,6 +7,10 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
+    public int totalResets = 0;
+    public int totalSaves = 0;
+    public int loopholes = 0;
+
     [Header("Data management")]
     [SerializeField] private SaveData[] saveData;
     private int activeSaveIndex;
@@ -129,6 +133,8 @@ public class GameManager : MonoBehaviour
         UIManager.Instance.ShowLoadTransition();
         SceneManager.LoadScene(0);
         Invoke("ReturnToMainMenu", 0.15f);
+
+        totalResets++;
     }
 
     private void ReturnToMainMenu()
@@ -189,6 +195,7 @@ public class GameManager : MonoBehaviour
                 //activeSaveData = saveData[0];
                 saveData[activeSaveIndex] = new SaveData(currentLevel, playerCharacterType, playerCharacter.transform.position.x, playerCharacter.transform.position.y);
                 UIManager.Instance.SaveAtSlot(activeSaveIndex, saveData[activeSaveIndex]);
+                totalSaves++;
             }
             //else if (Input.GetKeyDown(KeyCode.Alpha2))
             //{
@@ -258,6 +265,7 @@ public class GameManager : MonoBehaviour
     public void ReloadSave(int index = -1)
     {
         UIManager.Instance.ShowLoadTransition();
+        totalResets++;
 
         if(index == -1) //hard reset flag
         {

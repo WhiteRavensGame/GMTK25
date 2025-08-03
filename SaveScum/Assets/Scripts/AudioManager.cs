@@ -1,4 +1,3 @@
-using UnityEditor.Overlays;
 using UnityEngine;
 
 public class AudioManager : MonoBehaviour
@@ -38,7 +37,11 @@ public class AudioManager : MonoBehaviour
     }
     public void PlaySFX(AudioClip[] audios)
     {
+        if (audios.Length <= 0) return;
+        
+
         AudioClip audio = audios[UnityEngine.Random.Range(0, audios.Length)];
-        sfxAudioSource.PlayOneShot(audio);
+        if(audio != null) 
+            sfxAudioSource.PlayOneShot(audio);
     }
 }

@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -23,6 +24,8 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Sprite[] characterSprites;
     [SerializeField] private Animator transitionPanelAnimator;
+
+    public TextMeshProUGUI endGameStatsText;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
@@ -90,6 +93,7 @@ public class UIManager : MonoBehaviour
     {
         gameFinishedPanel.SetActive(true);
         saveSlotsPanel.SetActive(false);
+        endGameStatsText.text = $"You looped a total of {GameManager.Instance.totalResets} and saved {GameManager.Instance.totalSaves}.\n You also exploited some loopholes...";
     }
 
     public void DisplaySealedPlasterObject(bool show)

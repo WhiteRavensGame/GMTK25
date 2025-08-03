@@ -146,6 +146,11 @@ public class BattleSpriteAction : MonoBehaviour
         else if (collider.gameObject.CompareTag("Projectiles"))
         {
             HurtPlayer(1);
+			if(collider.gameObject.TryGetComponent<BossProjectiles>(out BossProjectiles projectile))
+			{
+				Vector2 hitPoint = (transform.position + collider.transform.position) / 2f;
+				Instantiate(projectile.GetHitParticle(), hitPoint, Quaternion.identity);
+			}
 			Destroy(collider.gameObject);
         }
         else if (collider.gameObject.CompareTag("DeadlyProjectile"))
@@ -160,9 +165,8 @@ public class BattleSpriteAction : MonoBehaviour
 		hp -= damage;
 		if(hp <= 0)
 		{
-			KillPlayer();
-			AudioManager.Instance.PlaySFX(deathAudio);
-		}
+            KillPlayer();
+        }
 		else
 		{
             AudioManager.Instance.PlaySFX(hurtAudio);
@@ -177,7 +181,9 @@ public class BattleSpriteAction : MonoBehaviour
 		if (!isAlive)
 			return;
 
-		hp = 0;
+		AudioManager.Instance.PlaySFX(deathAudio); 
+
+        hp = 0;
         animator.SetBool(hashIsDead, true);
         isAlive = false;
 		OnPlayerDeath?.Invoke(this, EventArgs.Empty);

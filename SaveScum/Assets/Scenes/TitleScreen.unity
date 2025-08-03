@@ -11393,10 +11393,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 457748577047164809, guid: 89589299abbd5ba4ab1775cb96924c60, type: 3}
-      propertyPath: m_text
-      value: "\nPress 1/2/3 to load 1st/2nd/3rd slot \nanytime in game"
-      objectReference: {fileID: 0}
     - target: {fileID: 1095541066363554115, guid: 89589299abbd5ba4ab1775cb96924c60, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -11536,10 +11532,6 @@ PrefabInstance:
     - target: {fileID: 8016402149260755948, guid: 89589299abbd5ba4ab1775cb96924c60, type: 3}
       propertyPath: m_Name
       value: Canvas_UI
-      objectReference: {fileID: 0}
-    - target: {fileID: 8016402149260755948, guid: 89589299abbd5ba4ab1775cb96924c60, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8106874727824869729, guid: 89589299abbd5ba4ab1775cb96924c60, type: 3}
       propertyPath: m_AnchorMax.y
