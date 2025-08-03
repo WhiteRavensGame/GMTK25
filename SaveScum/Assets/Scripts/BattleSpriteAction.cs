@@ -135,13 +135,16 @@ public class BattleSpriteAction : MonoBehaviour
         if (collider.gameObject.CompareTag("DamageObject"))
         {
             HurtPlayer();
-            Console.WriteLine("Damage player (trigger)");
         }
         else if (collider.gameObject.CompareTag("Projectiles"))
         {
             HurtPlayer(1);
-            Console.WriteLine("Player hit by projectile.");
 			Destroy(collider.gameObject);
+        }
+        else if (collider.gameObject.CompareTag("DeadlyProjectile"))
+        {
+            HurtPlayer();
+            Destroy(collider.gameObject);
         }
     }
 

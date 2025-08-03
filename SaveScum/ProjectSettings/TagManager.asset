@@ -11,6 +11,7 @@ TagManager:
   - Statue
   - Projectiles
   - MeleeHitBox
+  - DeadlyProjectile
   layers:
   - Default
   - TransparentFX
