@@ -3292,7 +3292,7 @@ Tilemap:
     m_Data: {r: 1, g: 1, b: 1, a: 1}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.254717, g: 0.254717, b: 0.254717, a: 1}
   m_Origin: {x: -16, y: -5, z: 0}
   m_Size: {x: 55, y: 17, z: 1}
   m_TileAnchor: {x: 0.5, y: 0.5, z: 0}
@@ -3645,10 +3645,11 @@ MonoBehaviour:
   spriteRenderer: {fileID: 0}
   rig2d: {fileID: 0}
   characterType: 0
-  hp: 4
+  hp: 6
+  maxHP: 6
   slamParticle: {fileID: 0}
   bossState: 0
-  projectilesToSpawn:
+  spawnableProjectiles:
   - {fileID: 4160392176157552573, guid: 7241f3e95184e094cbf09268127ee7f5, type: 3}
   - {fileID: 7517922778726005233, guid: 4ab73288a86981542920543c40a8d378, type: 3}
   - {fileID: 8783758541022756369, guid: 6482a5cabfd0603448596227224d2e59, type: 3}

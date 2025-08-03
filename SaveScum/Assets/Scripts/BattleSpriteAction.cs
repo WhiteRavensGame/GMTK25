@@ -122,6 +122,7 @@ public class BattleSpriteAction : MonoBehaviour
 			HurtPlayer();
 			Console.WriteLine("Damage player");
 		}
+		
     }
 
     private void OnTriggerEnter2D(Collider2D collider)
@@ -130,6 +131,11 @@ public class BattleSpriteAction : MonoBehaviour
         {
             HurtPlayer();
             Console.WriteLine("Damage player (trigger)");
+        }
+        else if (collider.gameObject.CompareTag("Projectiles"))
+        {
+            HurtPlayer(1);
+            Console.WriteLine("Player hit by projectile.");
         }
     }
 
@@ -170,6 +176,7 @@ public class BattleSpriteAction : MonoBehaviour
 	{
 		KillPlayer();
 	}
+
 	public bool IsAlive()
 	{
 		return isAlive;

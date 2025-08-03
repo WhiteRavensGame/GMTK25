@@ -9,6 +9,7 @@ TagManager:
   - StartPos
   - Miniboss
   - Statue
+  - Projectiles
   layers:
   - Default
   - TransparentFX

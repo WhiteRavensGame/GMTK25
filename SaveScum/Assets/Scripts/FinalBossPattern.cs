@@ -29,7 +29,8 @@ public class FinalBossPattern : MonoBehaviour
 
     [SerializeField] public PlayerCharacter characterType;
 
-    public int hp = 4;
+    public int hp = 6;
+    public int maxHP = 6;
 
     private bool canJump = true;
     private bool isAlive = true;
@@ -41,8 +42,9 @@ public class FinalBossPattern : MonoBehaviour
 
     public BossState bossState = BossState.IDLE;
     private Vector3 startPos;
+    float overallSpeed = 1;
 
-    [SerializeField] private List<GameObject> projectilesToSpawn;
+    [SerializeField] private List<GameObject> spawnableProjectiles;
     private List<GameObject> projectiles;
 
 
@@ -64,25 +66,101 @@ public class FinalBossPattern : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         rig2d = GetComponent<Rigidbody2D>();
         projectiles = new List<GameObject>();
+
+        
     }
 
     void Start()
     {
         startPos = transform.position;
-        playerTarget = GameObject.FindGameObjectWithTag("Player").GetComponent<BattleSpriteAction>();
+        
+        Invoke("DelayPlayerSearch", 0.75f);
+    }
 
+    private void DelayPlayerSearch()
+    {
+        GameObject g = GameObject.FindGameObjectWithTag("Player");
+        playerTarget = g.GetComponent<BattleSpriteAction>();
+        Debug.Log(g.name);
+        StartCoroutine(ProcessAttackPattern());
+    }
 
-        //Invoke("DelayStatueSearch", 0.5f);
+    Bounds GetCameraBounds()
+    {
+        Camera cam = Camera.main;
+        float height = 2f * cam.orthographicSize;
+        float width = height * cam.aspect;
+
+        Vector3 center = cam.transform.position;
+        Vector3 size = new Vector3(width, height, 0);
+
+        return new Bounds(center, size);
+
+    }
+
+    private Vector2 GetRandomPositionAroundPlayer(Vector2 playerPosition, float minDistance, float maxDistance)
+    {
+        Bounds cameraBounds = GetCameraBounds();
+        Vector2 spawnPos;
+        Vector3 spawnPos3D;
+        Vector2 ownerPos = new Vector2(transform.position.x, transform.position.y);
+        float distanceToBoss = 999;
+
+        int attempts = 0;
+        do
+        {
+            float angle = UnityEngine.Random.Range(0, 360f);
+            float distance = UnityEngine.Random.Range(minDistance, maxDistance);
+
+            float radians = angle * Mathf.Deg2Rad;
+            Vector2 offset = new Vector2(Mathf.Cos(radians), Mathf.Sin(radians)) * distance;
+            spawnPos = playerPosition + offset;
+            spawnPos3D = new Vector3(spawnPos.x, spawnPos.y, cameraBounds.center.z);
+            attempts++;
+
+            distanceToBoss = Vector2.Distance(spawnPos, ownerPos);
+
+            if (attempts >= 50) break;
+
+        } while (!cameraBounds.Contains(spawnPos3D) || distanceToBoss < 1.25f);
+
+        //Debug.Log(attempts);
+        
+
+        return spawnPos;
+    }
+
+    private void PointProjectileTowardsPlayer(Transform projectileTransform, Vector2 playerPosition)
+    {
+        Vector2 direction = (playerPosition - (Vector2)projectileTransform.position).normalized;
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        projectileTransform.rotation = Quaternion.Euler(0, 0, angle);
     }
 
     //method called by the animation Attack1
     public void SpawnProjectiles()
     {
         int projectilesToLaunch = 4;
-        for(int i = 0; i < projectilesToLaunch; i++)
+        Vector2 playerPos = new Vector2(playerTarget.transform.position.x, playerTarget.transform.position.y);
+
+        for (int i = 0; i < projectilesToLaunch; i++)
         {
-            GameObject g;
+            //Randomize a point around the player, and have projectile point towards player.
+            int randProjectile = UnityEngine.Random.Range(0, spawnableProjectiles.Count);
+
+            Vector2 spawnLocation = GetRandomPositionAroundPlayer(playerPos, 2f, 5f);
+
+            GameObject g = Instantiate(spawnableProjectiles[randProjectile], spawnLocation, Quaternion.identity);
+            PointProjectileTowardsPlayer(g.transform, playerPos);
         }
+    }
+
+
+    void OnDrawGizmos()
+    {
+        Bounds bounds = GetCameraBounds();
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireCube(bounds.center, bounds.size);
     }
 
     public void FireProjectiles()
@@ -98,17 +176,23 @@ public class FinalBossPattern : MonoBehaviour
 
     IEnumerator ProcessAttackPattern()
     {
-        yield return new WaitForSeconds(1f);
-        //walk towards 
-        bossState = BossState.CHARGING; //show all directions of where the attack can come from.
-        yield return new WaitForSeconds(5f);
-        animator.SetTrigger(hashAttack2);
-        yield return new WaitForSeconds(0.67f);
-       // bossState = BossState.HIT_SAVESTATUE;
-        yield return new WaitForSeconds(3f);
-       // bossState = BossState.RETURN_TO_POST;
-        yield return new WaitForSeconds(5f);
-        yield return null;
+        while (playerTarget.IsAlive())
+        {
+            yield return new WaitForSeconds(3f / overallSpeed);
+            bossState = BossState.CHARGING; //show all directions of where the attack can come from.
+            animator.speed = overallSpeed;
+            animator.SetTrigger(hashAttack1);
+        }
+
+        //Player Died. Do taunt.
+        Debug.Log("BOSS TAUNT");
+        
+       // yield return new WaitForSeconds(1f/overallSpeed);
+       //// bossState = BossState.HIT_SAVESTATUE;
+       // yield return new WaitForSeconds(3f);
+       //// bossState = BossState.RETURN_TO_POST;
+       // yield return new WaitForSeconds(5f);
+       // yield return null;
     }
 
     private void SimulateForwardMovement(Vector3 targetPos)
@@ -155,10 +239,14 @@ public class FinalBossPattern : MonoBehaviour
 
     void Update()
     {
-
-
         if (!isAlive)
             return;
+
+        //make boss go faster when lower in health
+        overallSpeed = 1 + ( 1 - (float)hp / (float)maxHP );
+        
+        BossProjectiles.speedModifier = overallSpeed;
+
 
         //if (bossState == BossState.APPROACH_SAVESTATUE)
         //{
@@ -259,6 +347,13 @@ public class FinalBossPattern : MonoBehaviour
             }
 
         }
+        else if (collider.gameObject.CompareTag("Projectiles"))
+        {
+            HurtPlayer(1);
+            animator.speed = 1;
+            Console.WriteLine("Boss hit by projectile.");
+            Destroy(collider.gameObject);
+        }
     }
     public void SendTargetFlyingUp()
     {
@@ -305,6 +400,7 @@ public class FinalBossPattern : MonoBehaviour
         isAlive = false;
         OnPlayerDeath?.Invoke(this, EventArgs.Empty);
         animator.SetTrigger(hashDamage);
+        StopAllCoroutines();
     }
 
 }
