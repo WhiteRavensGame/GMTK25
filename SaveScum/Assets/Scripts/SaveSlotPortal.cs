@@ -29,6 +29,7 @@ public class SaveSlotPortal : MonoBehaviour
         {
             Debug.Log($"Slot {saveSlotNumber} has NO save file");
             isLocked = false;
+            portalText.text = "Slot" + saveSlotNumber;
         }
     }
 

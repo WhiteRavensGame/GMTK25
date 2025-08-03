@@ -175,8 +175,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08619267eabc46747b4f7c1207b52e93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelButtons:
-  - {fileID: 0}
+  levelButtons: []
   spriteRenderer: {fileID: 870142714463878568}
   deathCollider: {fileID: 6957227607634324579}
-  timerTransition: 0.16

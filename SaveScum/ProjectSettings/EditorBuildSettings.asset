@@ -9,14 +9,14 @@ EditorBuildSettings:
     path: Assets/Scenes/TitleScreen.unity
     guid: 54bd4e37a8a53db45a545a13d75f24db
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
-    guid: 8c9cfa26abfee488c85f1582747f6a02
-  - enabled: 1
-    path: Assets/Scenes/Level2.unity
+    path: Assets/Scenes/Level1.unity
     guid: 44d26bff89f849f4c94050814d28dbc3
   - enabled: 1
-    path: Assets/Scenes/Level3.unity
+    path: Assets/Scenes/Level2.unity
     guid: 632d37b5a6a40c549b946782d16826bc
+  - enabled: 1
+    path: Assets/Scenes/Level3.unity
+    guid: 8c9cfa26abfee488c85f1582747f6a02
   - enabled: 1
     path: Assets/Scenes/Level4.unity
     guid: 878d9b5d04ef5e54ebb567917de3c0e3

@@ -18,6 +18,7 @@ public class UIManager : MonoBehaviour
     [Header("Sprites")]
     [SerializeField]
     private Sprite[] characterSprites;
+    [SerializeField] private Animator transitionPanelAnimator;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
@@ -70,5 +71,10 @@ public class UIManager : MonoBehaviour
     {
         Sprite sprite = characterSprites[(int)data.characterType];
         saveSlots[slotID].AssignSaveDataToSlot(data.characterType, data.level, sprite);
+    }
+
+    public void ShowLoadTransition()
+    {
+        transitionPanelAnimator.SetTrigger("FadeBlack");
     }
 }

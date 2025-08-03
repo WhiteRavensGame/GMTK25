@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Level2
   m_EditorClassIdentifier: 
   level: 2
-  timeLimit: 3
+  timeLimit: 8
   levelName: Impossible? Speedrun

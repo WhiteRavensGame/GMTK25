@@ -126,6 +126,7 @@ public class GameManager : MonoBehaviour
 
     public void BeginReturnToMainMenu()
     {
+        UIManager.Instance.ShowLoadTransition();
         SceneManager.LoadScene(0);
         Invoke("ReturnToMainMenu", 0.15f);
     }
@@ -244,6 +245,8 @@ public class GameManager : MonoBehaviour
 
     public void ReloadSave(int index = -1)
     {
+        UIManager.Instance.ShowLoadTransition();
+
         if(index == -1) //hard reset flag
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
@@ -333,6 +336,7 @@ public class GameManager : MonoBehaviour
     public void LoadNextLevel()
     {
         currentLevel++;
+        UIManager.Instance.ShowLoadTransition();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         Invoke("RespawnCharacterHardReset", 0.15f);
         ResetTimer();
